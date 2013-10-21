@@ -65,7 +65,7 @@ public class AlgoCw {
             for (Route route : station.getAllRoutes()) { // Repeat this for all routes from station
                 Station nextStation = route.getGoingTo(); // Next station in route
 
-                int newDistance = route.getLength() + station.getDistance(); // Getting final distance
+                Double newDistance = route.getLength() + station.getDistance(); // Getting final distance
                 if (newDistance < nextStation.getDistance()) {
 
                     // Updating distance straight in priority queue

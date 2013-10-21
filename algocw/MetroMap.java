@@ -35,14 +35,14 @@ public class MetroMap {
         return this;
     }
     
-    public MetroMap setDistance(int dist) {
+    public MetroMap setDistance(Double dist) {
          this.lastS.setDistance(dist);
          return this;
     }
     
     public MetroMap setFromStation(String from) {
         Station station = getStation(from);
-        station.setDistance(0);
+        station.setDistance(0.0);
         this.stations.remove(station);
         this.stations.add(station);
         return this;

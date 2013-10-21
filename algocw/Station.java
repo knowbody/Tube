@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Station implements Comparable<Station> {
     private ArrayList<Route> routes = new ArrayList<>();
     private String name;
-    private Integer distance = 9999999;
+    private Double distance = Double.POSITIVE_INFINITY;
     public ArrayList<Station> sPath = new ArrayList<>();
     
     public Station() {
@@ -32,7 +32,7 @@ public class Station implements Comparable<Station> {
         return this.name;
     }
     
-    public int getDistance() {
+    public Double getDistance() {
         return this.distance;
     }
     
@@ -54,7 +54,7 @@ public class Station implements Comparable<Station> {
         this.routes.add(new Route(goingTo, length, line));
     }
     
-    public void setDistance(int dist) {
+    public void setDistance(Double dist) {
         this.distance = dist;
     }
     
