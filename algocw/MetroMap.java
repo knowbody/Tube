@@ -5,10 +5,6 @@ package algocw;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Patrik Fuhrmann
- */
 public class MetroMap {
     private ArrayList<Station> stations = new ArrayList<Station>(); // List of metro stations
     private Station lastS; // Holder for last inserted station

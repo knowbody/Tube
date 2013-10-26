@@ -6,10 +6,6 @@ package algocw;
 
 import java.util.PriorityQueue;
 
-/**
- *
- * @author Patrik Fuhrmann
- */
 public class AlgoCw {
 
     /**
@@ -18,10 +14,10 @@ public class AlgoCw {
     public static void main(String[] args) {
         PriorityQueue<Station> pq = new PriorityQueue<>();
 
-        String fromStation = "Nadrazi Holesovice";
+        String fromStation = "I.P. Pavlova";
         String toStation = "Krizovka";
 
-        // Building up the Praque Tube!
+        // Building up the Prague Tube!
         MetroMap praque = new MetroMap();
         praque.addStation("Malostranska")
                 .addStation("Staromestka")
@@ -82,12 +78,25 @@ public class AlgoCw {
         System.out.print("Shortest routes from " + fromStation);
         System.out.println();
         for (Station station : praque.getAllStations()) {
-            System.out.print("To " + station.getName() + " : " + station.getDistance());
-
-            for (int i = 0; i < station.getSPath().size(); i++) {
+            System.out.print("To " + station.getName() + " : " + station.getDistance() + " -------->> ");
+            
+            int numOfStations = station.getSPath().size();
+            for (int i = 0; i < numOfStations; i++) {
                 Station s = station.getSPath().get(i);
-                //System.out.print(" --> " + s.getName() + "(" + s.getRoute(linux) + "");
-                System.out.print(" --> " + s.getName() + "(A)");
+                String nextStation;
+                
+                System.out.print(s.getName() + "");
+                
+                // Getting next station
+                if ((i+1) < numOfStations) {
+                	nextStation = station.getSPath().get(i+1).getName();
+                	//System.out.print(" --> " + s.getName() + "(" + s.getRoute(station.getSPath().get(i+1).) + "");
+                	String routeLine = s.getRouteLine(nextStation);
+                	
+                    System.out.print(" --(" + s.getRouteLine(nextStation) +")--> ");
+                }
+                
+                
             }
             System.out.println();
         }

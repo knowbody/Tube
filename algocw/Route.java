@@ -3,10 +3,6 @@
  */
 package algocw;
 
-/**
- *
- * @author Patrik Fuhrmann
- */
 public class Route {
     private Station goingTo; // Destination
     private int length; // Length of the route
@@ -42,5 +38,9 @@ public class Route {
     
     public Station getGoingTo() {
         return this.goingTo;
+    }
+    
+    public String getLine() {
+        return this.line;
     }
 }

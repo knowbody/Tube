@@ -5,10 +5,6 @@ package algocw;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Patres
- */
 public class Station implements Comparable<Station> {
     private ArrayList<Route> routes = new ArrayList<>();
     private String name;
@@ -36,10 +32,10 @@ public class Station implements Comparable<Station> {
         return this.distance;
     }
     
-    public Route getRoute(String to) {
+    public String getRouteLine(String to) {
         for (Route route : this.routes) {
             if (route.getGoingTo().name.equals(to)) {
-                return route;
+                return route.getLine();
             }
         }
         return null;
