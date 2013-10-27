@@ -1,5 +1,5 @@
 /*
- * Route object representation. Each station can have 0 to 2 routes
+ * Route object representation.
  */
 package algocw;
 
@@ -9,17 +9,11 @@ public class Route {
     private String line; // Route line
     
     /**
-     * New null object
-     */
-    public Route() {
-        this(null, 0, "");
-    }
-    
-    /**
-     * New object with predefined data 
+     * New route object with predefined data 
      * 
      * @param to  Destination of the route
      * @param length  Length of the route
+     * @param line  Line letter
      */
     public Route(Station to, int length, String line) {
         this.goingTo = to;
@@ -36,10 +30,20 @@ public class Route {
         return this.length;
     }
     
+    /**
+     * Get route destination
+     * 
+     * @return Station which is destination
+     */
     public Station getGoingTo() {
         return this.goingTo;
     }
     
+    /**
+     * Get line letter
+     * 
+     * @return Line letter
+     */
     public String getLine() {
         return this.line;
     }

@@ -1,18 +1,16 @@
 /*
- * Object representration of the metro map
+ * Ordinary Metro map
  */
 package algocw;
 
 import java.util.ArrayList;
 
 public class MetroMap {
-    private ArrayList<Station> stations = new ArrayList<Station>(); // List of metro stations
-    private Station lastS; // Holder for last inserted station
+    private ArrayList<Station> stations = new ArrayList<Station>(); // List of Metro stations
     
     public MetroMap addStation(String name) {
         Station station = new Station(name);
         this.stations.add(station);
-        this.lastS = station;
         return this;
     }
     
@@ -32,7 +30,7 @@ public class MetroMap {
     }
     
     public MetroMap setDistance(Double dist) {
-         this.lastS.setDistance(dist);
+         this.setDistance(dist);
          return this;
     }
     
@@ -58,7 +56,7 @@ public class MetroMap {
     }
     
     public void updateStation(Station s) {
-         this.stations.remove(s);
+        this.stations.remove(s);
         this.stations.add(s);
     }
 }

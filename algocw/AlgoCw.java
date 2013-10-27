@@ -7,13 +7,12 @@ package algocw;
 import java.util.PriorityQueue;
 
 public class AlgoCw {
-
+	private static PriorityQueue<Station> pq = new PriorityQueue<>();
+	
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PriorityQueue<Station> pq = new PriorityQueue<>();
-
         String fromStation = "CM";
         String toStation = "Krizovka";
 
@@ -39,8 +38,7 @@ public class AlgoCw {
 
                     // Updating distance straight in priority queue
                     nextStation.setDistance(newDistance);
-                    pq.remove(nextStation);
-                    pq.add(nextStation);
+                    updatePQ(nextStation);
 
                     // Adding shortest path to next station
                     nextStation.getSPath().addAll(station.getSPath());
@@ -63,9 +61,7 @@ public class AlgoCw {
                 // Getting next station
                 if ((i+1) < numOfStations) {
                 	nextStation = station.getSPath().get(i+1).getName();
-                	//System.out.print(" --> " + s.getName() + "(" + s.getRoute(station.getSPath().get(i+1).) + "");
-                	String routeLine = s.getRouteLine(nextStation);
-                	
+   	
                     System.out.print(" --(" + s.getRouteLine(nextStation) +")--> ");
                 }
                 
@@ -73,5 +69,15 @@ public class AlgoCw {
             }
             System.out.println();
         }
+    }
+    
+    /**
+     * Here we are updating station in the priority queue.
+     * 
+     * @param s	 Station which should get updated
+     */
+    private static void updatePQ(Station s) {
+    	 pq.remove(s);
+         pq.add(s);
     }
 }

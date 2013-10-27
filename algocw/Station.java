@@ -6,14 +6,10 @@ package algocw;
 import java.util.ArrayList;
 
 public class Station implements Comparable<Station> {
-    private ArrayList<Route> routes = new ArrayList<>();
-    private String name;
+    private ArrayList<Route> routes = new ArrayList<>(); // Routes from the station
+    public ArrayList<Station> sPath = new ArrayList<>(); // Shortest path
+    private String name; // Station name
     private Double distance = Double.POSITIVE_INFINITY;
-    public ArrayList<Station> sPath = new ArrayList<>();
-    
-    public Station() {
-        this("");
-    }
     
     public Station(String name) {
         this.name = name;
@@ -54,6 +50,10 @@ public class Station implements Comparable<Station> {
         this.distance = dist;
     }
     
+    
+    /**
+     * Comparator
+     */
     @Override
     public int compareTo(Station s) {
         return this.distance.compareTo(s.getDistance());
