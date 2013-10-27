@@ -17,7 +17,7 @@ public class AlgoCw {
         String toStation = "Krizovka";
 
         // Getting Prague tube map
-        MetroMap prague = new PragueMap().getMap();
+        MetroMap prague = new PragueMetroMap();
      
         // Setting up starting point
         prague.setFromStation(fromStation);
