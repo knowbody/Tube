@@ -8,11 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.PriorityQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.SwingUtilities;
 
-public class AlgoCw extends JFrame implements ActionListener, Runnable {
+public class AlgoCw implements ActionListener, Runnable {
 	private static PriorityQueue<Station> pq = new PriorityQueue<>();
 	private static MetroMap prague = new PragueMetroMap();
 	private static  JList listFrom;
@@ -43,7 +42,7 @@ public class AlgoCw extends JFrame implements ActionListener, Runnable {
     	String fromStation = from;
         String toStation = to;
         
-        // Getting brain new Prague tubeinstance
+        // Getting brain new Prague tube instance
         prague = new PragueMetroMap();
      
         // Setting up starting point
@@ -59,7 +58,7 @@ public class AlgoCw extends JFrame implements ActionListener, Runnable {
         printResults(fromStation);
     }
     
-    public static void dijkstra() {
+    private static void dijkstra() {
     	while (!pq.isEmpty()) { // While priority queue is not empty
             Station station = pq.remove(); // Remove station from priority queque
             station.getSPath().add(station); // Add station to current path
@@ -81,7 +80,7 @@ public class AlgoCw extends JFrame implements ActionListener, Runnable {
         }
     }
     
-    public static void printResults(String fromStation) {
+    private static void printResults(String fromStation) {
     	System.out.print("Shortest routes from " + fromStation);
         System.out.println();
         for (Station station : prague.getAllStations()) {
@@ -109,14 +108,19 @@ public class AlgoCw extends JFrame implements ActionListener, Runnable {
     public void actionPerformed(ActionEvent e) {
         String from = (String) listFrom.getSelectedValue();
         String to = (String) listTo.getSelectedValue();
-    	doSearch(from, to);
+        
+        if (from == null) {
+        	System.out.println("Please select FROM station.");
+        } else {
+        	doSearch(from, to);
+        }
     }
 
 	@Override
 	public void run() {
 		MainGui ex = new MainGui(this, prague);
         ex.setVisible(true);
-        this.listFrom = ex.getListFrom();
-        this.listTo = ex.getListTo();
+        listFrom = ex.getListFrom();
+        listTo = ex.getListTo();
 	}
 }
