@@ -4,29 +4,63 @@
  */
 package algocw;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.PriorityQueue;
 
-public class AlgoCw {
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.SwingUtilities;
+
+public class AlgoCw extends JFrame implements ActionListener, Runnable {
 	private static PriorityQueue<Station> pq = new PriorityQueue<>();
+	private static MetroMap prague = new PragueMetroMap();
+	private static  JList listFrom;
+	private static  JList listTo;
+	
+	public AlgoCw() {
+		SwingUtilities.invokeLater(this);
+	}
 	
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String fromStation = "CM";
-        String toStation = "Krizovka";
-
-        // Getting Prague tube map
-        MetroMap prague = new PragueMetroMap();
+    	new AlgoCw();
+    }
+    
+    /**
+     * Here we are updating station in the priority queue.
+     * 
+     * @param s	 Station which should get updated
+     */
+    private static void updatePQ(Station s) {
+    	 pq.remove(s);
+         pq.add(s);
+    }
+    
+    private static void doSearch(String from, String to) {
+    	String fromStation = from;
+        String toStation = to;
+        
+        // Getting brain new Prague tubeinstance
+        prague = new PragueMetroMap();
      
         // Setting up starting point
         prague.setFromStation(fromStation);
 
-        // Building priority queue
+        // Setting up priority queue
         pq.addAll(prague.getAllStations());
 
-        // Dijkstra Algorithm
-        while (!pq.isEmpty()) { // While priority queue is not empty
+        // Run Dijkstra Algorithm
+        dijkstra();
+        
+        // Print out result
+        printResults(fromStation);
+    }
+    
+    public static void dijkstra() {
+    	while (!pq.isEmpty()) { // While priority queue is not empty
             Station station = pq.remove(); // Remove station from priority queque
             station.getSPath().add(station); // Add station to current path
 
@@ -40,13 +74,15 @@ public class AlgoCw {
                     nextStation.setDistance(newDistance);
                     updatePQ(nextStation);
 
-                    // Adding shortest path to next station
+                    // Adding shortest path to the next station
                     nextStation.getSPath().addAll(station.getSPath());
                 }
             }
         }
-
-        System.out.print("Shortest routes from " + fromStation);
+    }
+    
+    public static void printResults(String fromStation) {
+    	System.out.print("Shortest routes from " + fromStation);
         System.out.println();
         for (Station station : prague.getAllStations()) {
             System.out.print("To " + station.getName() + " : " + station.getDistance() + " -------->> ");
@@ -64,20 +100,23 @@ public class AlgoCw {
    	
                     System.out.print(" --(" + s.getRouteLine(nextStation) +")--> ");
                 }
-                
-                
             }
             System.out.println();
         }
     }
     
-    /**
-     * Here we are updating station in the priority queue.
-     * 
-     * @param s	 Station which should get updated
-     */
-    private static void updatePQ(Station s) {
-    	 pq.remove(s);
-         pq.add(s);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String from = (String) listFrom.getSelectedValue();
+        String to = (String) listTo.getSelectedValue();
+    	doSearch(from, to);
     }
+
+	@Override
+	public void run() {
+		MainGui ex = new MainGui(this, prague);
+        ex.setVisible(true);
+        this.listFrom = ex.getListFrom();
+        this.listTo = ex.getListTo();
+	}
 }

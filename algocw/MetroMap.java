@@ -55,6 +55,22 @@ public class MetroMap {
         return this.stations;
     }
     
+    public String[] getAllStationsAsArray() {
+    	String[] arr = new String[this.getNumberOfStations()];
+    	int i = 0;
+    	
+    	for (Station s : this.stations) {
+    		arr[i] = s.getName();
+    		i++;
+        }
+    	
+    	return arr;
+    }
+    
+    public int getNumberOfStations() {
+    	return this.stations.size();
+    }
+    
     public void updateStation(Station s) {
         this.stations.remove(s);
         this.stations.add(s);
