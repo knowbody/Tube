@@ -4,6 +4,7 @@
 package algocw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MetroMap {
     private ArrayList<Station> stations = new ArrayList<Station>(); // List of Metro stations
@@ -63,6 +64,8 @@ public class MetroMap {
     		arr[i] = s.getName();
     		i++;
         }
+    
+    	Arrays.sort(arr); // Sorting alphabetically
     	
     	return arr;
     }
