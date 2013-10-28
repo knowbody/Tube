@@ -18,6 +18,7 @@ public class AlgoCw implements ActionListener, Runnable {
 	private static  JList listTo;
 	
 	public AlgoCw() {
+		// Running GUI
 		SwingUtilities.invokeLater(this);
 	}
 	
