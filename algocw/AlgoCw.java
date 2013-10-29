@@ -56,7 +56,7 @@ public class AlgoCw implements ActionListener, Runnable {
         dijkstra();
         
         // Print out result
-        printResults(fromStation);
+        printResults(fromStation, to);
     }
     
     private static void dijkstra() {
@@ -81,27 +81,29 @@ public class AlgoCw implements ActionListener, Runnable {
         }
     }
     
-    private static void printResults(String fromStation) {
+    private static void printResults(String fromStation, String toStation) {
     	System.out.print("Shortest routes from " + fromStation);
         System.out.println();
         for (Station station : prague.getAllStations()) {
-            System.out.print("To " + station.getName() + " : " + station.getDistance() + " -------->> ");
-            
-            int numOfStations = station.getSPath().size();
-            for (int i = 0; i < numOfStations; i++) {
-                Station s = station.getSPath().get(i);
-                String nextStation;
-                
-                System.out.print(s.getName() + "");
-                
-                // Getting next station
-                if ((i+1) < numOfStations) {
-                	nextStation = station.getSPath().get(i+1).getName();
-   	
-                    System.out.print(" --(" + s.getRouteLine(nextStation) +")--> ");
-                }
-            }
-            System.out.println();
+        	if (station.getName() == toStation || toStation == null) {
+	            System.out.print("To " + station.getName() + " : " + station.getDistance() + " --------> ");
+	            
+	            int numOfStations = station.getSPath().size();
+	            for (int i = 0; i < numOfStations; i++) {
+	                Station s = station.getSPath().get(i);
+	                String nextStation;
+	                
+	                System.out.print(s.getName() + "");
+	                
+	                // Getting next station if not last already
+	                if ((i+1) < numOfStations) {
+	                	nextStation = station.getSPath().get(i+1).getName();
+	   	
+	                    System.out.print(" --(" + s.getRouteLine(nextStation) +")--> ");
+	                }
+	            }
+	            System.out.println();
+        	}
         }
     }
     

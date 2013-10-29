@@ -31,7 +31,7 @@ public class MainGui extends JFrame {
 	       // From station
 	       panel.add(new JLabel("From station:"));	    
 	       JScrollPane fromScroller = new JScrollPane(listFrom);
-	       fromScroller.setPreferredSize(new Dimension(180, 120));
+	       fromScroller.setPreferredSize(new Dimension(160, 120));
 	       panel.add(fromScroller);
 	       
 	       listTo = new JList(prague.getAllStationsAsArray()); 
@@ -42,7 +42,7 @@ public class MainGui extends JFrame {
 	       // To station
 	       panel.add(new JLabel("To station:"));
 	       JScrollPane toScroller = new JScrollPane(listTo);
-	       toScroller.setPreferredSize(new Dimension(180, 120));
+	       toScroller.setPreferredSize(new Dimension(160, 120));
 	       panel.add(toScroller);
 	       
 	       JButton quitButton = new JButton("Search");
