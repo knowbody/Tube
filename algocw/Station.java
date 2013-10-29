@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Station implements Comparable<Station> {
     private ArrayList<Route> routes = new ArrayList<>(); // Routes from the station
-    public ArrayList<Station> sPath = new ArrayList<>(); // Shortest path
+    private ArrayList<Station> sPath = new ArrayList<>(); // Shortest path
     private String name; // Station name
     private Double distance = Double.POSITIVE_INFINITY;
     

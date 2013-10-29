@@ -9,12 +9,24 @@ import java.util.Arrays;
 public class MetroMap {
     private ArrayList<Station> stations = new ArrayList<Station>(); // List of Metro stations
     
+    /**
+     * 
+     * @param  name of the station
+     * @return
+     */
     public MetroMap addStation(String name) {
         Station station = new Station(name);
         this.stations.add(station);
         return this;
     }
     
+    /**
+     * adding new route
+     * @param from  the station where the journey starts
+     * @param to  the station - destination of the journey
+     * @param length  distance in-between the stations
+     * @param line  name of the line
+     */
     public MetroMap addRoute(String from, String to, int length, String line) {
         Station sFrom = getStation(from);
         Station sTo = getStation(to);
