@@ -60,6 +60,7 @@ public class PragueMetroMap extends MetroMap {
             .addStation("Opatov")
             .addStation("Haje")
             // Routes
+            // (from, to, distance, line name)
             .addRoute("Dejvicka", "Hradcanska", 2, "A")
     		.addRoute("Hradcanska", "Malostranska", 2, "A")
     		.addRoute("Malostranska", "Staromestka", 2, "A")
