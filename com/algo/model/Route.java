@@ -1,7 +1,7 @@
 /*
  * Route object representation.
  */
-package algocw;
+package com.algo.model;
 
 public class Route {
     private Station goingTo; // Destination
