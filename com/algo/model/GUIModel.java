@@ -6,13 +6,11 @@ public class GUIModel {
 
     private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague = new PragueMetroMap();
-    private String fromStation;
-    private String toStation;
     private String details;
 
     private void doSearch(String from, String to) {
-        fromStation = from;
-        toStation = to;
+        String fromStation = from;
+        String toStation = to;
 
         // Getting brain new Prague tube instance
         prague = new PragueMetroMap();
@@ -56,20 +54,32 @@ public class GUIModel {
         details = "From: " + fromStation + "\n";
         for (Station station : prague.getAllStations()) {
             if (station.getName() == toStation || toStation == null) {
-                details += "To: " + station.getName() + "\nDistance: " + station.getDistance() + "\nDescription:";
+                details += "To: " + station.getName() + "\nDistance: " + station.getDistance() + "\nDescription:\n";
 
                 int numOfStations = station.getSPath().size();
-                for (int i = 0; i < numOfStations; i++) {
+
+                String lineName = "";
+                for (int i = 0; i < numOfStations; ) {
+
                     Station s = station.getSPath().get(i);
                     String nextStation;
+                    String lineCurrent = lineName;
+
+                    i++;
 
                     details += s.getName() + "\n";
 
-                    // Getting next station if not last already
-                    if ((i + 1) < numOfStations) {
-                        nextStation = station.getSPath().get(i + 1).getName();
 
-                        details += "line " + s.getRouteLine(nextStation) + "\n";
+                    // Getting next station if not last already
+                    if (i < numOfStations) {
+                        nextStation = station.getSPath().get(i).getName();
+                        lineName = s.getRouteLine(nextStation);
+
+                        // if the previous line is the same as next do nothing, otherwise say to change line
+                        if (lineCurrent.equalsIgnoreCase(lineName)) {
+                        } else {
+                            details += " - change for line " + lineName + "\n";
+                        }
                     }
                 }
                 details += "\n";
