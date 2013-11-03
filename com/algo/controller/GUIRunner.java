@@ -28,7 +28,9 @@ public class GUIRunner implements Runnable {
         GUIModel model = new GUIModel();
         GUIController controller = new GUIController(model, view);
 
-        view.setVisible(true);
-
+        // without if statement might cause NullPointerException
+        if (view != null) {
+            view.setVisible(true);
+        }
     }
 }

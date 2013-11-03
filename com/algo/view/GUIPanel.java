@@ -34,11 +34,11 @@ public class GUIPanel extends JFrame {
 
         labelFrom = new JLabel("From station:");
         labelTo = new JLabel("To station:");
-        listFrom = new JList<String>(list.getAllStationsNamesAsArray());
-        listTo = new JList<String>(list.getAllStationsNamesAsArray());
+        listFrom = new JList<>(list.getAllStationsNamesAsArray());
+        listTo = new JList<>(list.getAllStationsNamesAsArray());
 
         checkBtn = new JButton("Check");
-        detailsArea = new JTextArea(15, 20);
+        detailsArea = new JTextArea(15, 34);
 
         BufferedImage tube = ImageIO.read(new File("src/tube.jpg"));
         picLabel = new JLabel(new ImageIcon(tube));
@@ -47,7 +47,6 @@ public class GUIPanel extends JFrame {
 
         setupPanel();
         setupLayout();
-
     }
 
     /**
@@ -67,7 +66,7 @@ public class GUIPanel extends JFrame {
         }
 
         JPanel myPanel = new JPanel();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(1024, 768);
 
         detailsArea.setLineWrap(true);
@@ -103,7 +102,7 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, labelFrom, 20, SpringLayout.NORTH, this);
 
         // LABEL: To station:
-        currentLayout.putConstraint(SpringLayout.WEST, labelTo, 240, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, labelTo, 260, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, labelTo, 20, SpringLayout.NORTH, this);
 
         // SCROLLER AREA: From
@@ -111,19 +110,19 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, fromScroller, 40, SpringLayout.NORTH, this);
 
         // SCROLLER AREA: To
-        currentLayout.putConstraint(SpringLayout.WEST, toScroller, 240, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, toScroller, 260, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, toScroller, 40, SpringLayout.NORTH, this);
 
         // DETAILS AREA: Journey description
-        currentLayout.putConstraint(SpringLayout.WEST, scrollPane, 555, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, scrollPane, 615, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, scrollPane, 40, SpringLayout.NORTH, this);
 
         // BUTTON: Check
-        currentLayout.putConstraint(SpringLayout.WEST, checkBtn, 460, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, checkBtn, 500, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, checkBtn, 140, SpringLayout.NORTH, this);
 
         // IMAGE: Tube Map
-        currentLayout.putConstraint(SpringLayout.WEST, picLabel, 180, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, picLabel, 160, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, picLabel, 290, SpringLayout.NORTH, this);
     }
 
@@ -131,14 +130,14 @@ public class GUIPanel extends JFrame {
      * @return name of the selected station from "From station:"
      */
     public String getFromStation() {
-        return (String) listFrom.getSelectedValue();
+        return listFrom.getSelectedValue();
     }
 
     /**
      * @return name of the selected station from "To station:"
      */
     public String getToStation() {
-        return (String) listTo.getSelectedValue();
+        return listTo.getSelectedValue();
     }
 
     /**
