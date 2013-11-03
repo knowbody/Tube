@@ -55,7 +55,7 @@ public class GUIPanel extends JFrame {
 
         JPanel myPanel = new JPanel();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(1024, 768);
 
         detailsArea.setLineWrap(true);
         scrollPane = new JScrollPane(detailsArea);

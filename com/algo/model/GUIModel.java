@@ -53,23 +53,23 @@ public class GUIModel {
     }
 
     private void printResults(String fromStation, String toStation) {
-        details = "Shortest routes from " + fromStation + "\n";
+        details = "From: " + fromStation + "\n";
         for (Station station : prague.getAllStations()) {
             if (station.getName() == toStation || toStation == null) {
-                details += "To " + station.getName() + " : " + station.getDistance() + " --------> ";
+                details += "To: " + station.getName() + "\nDistance: " + station.getDistance() + "\nDescription:";
 
                 int numOfStations = station.getSPath().size();
                 for (int i = 0; i < numOfStations; i++) {
                     Station s = station.getSPath().get(i);
                     String nextStation;
 
-                    details += s.getName();
+                    details += s.getName() + "\n";
 
                     // Getting next station if not last already
                     if ((i + 1) < numOfStations) {
                         nextStation = station.getSPath().get(i + 1).getName();
 
-                        details += " --(" + s.getRouteLine(nextStation) + ")--> ";
+                        details += "line " + s.getRouteLine(nextStation) + "\n";
                     }
                 }
                 details += "\n";
