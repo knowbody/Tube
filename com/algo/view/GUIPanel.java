@@ -28,16 +28,8 @@ public class GUIPanel extends JFrame {
 
 
     public GUIPanel() throws IOException {
-    	try {
-    	    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-    	        if ("Nimbus".equals(info.getName())) {
-    	            UIManager.setLookAndFeel(info.getClassName());
-    	            break;
-    	        }
-    	    }
-    	} catch (Exception e) {
-    	    // If Nimbus is not available, you can set the GUI to another look and feel.
-    	}
+        super("Prague Metro - Journey Planner");
+
         MetroMap list = new PragueMetroMap();
 
         labelFrom = new JLabel("From station:");
@@ -63,6 +55,17 @@ public class GUIPanel extends JFrame {
      */
     private void setupPanel() {
 
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
+
         JPanel myPanel = new JPanel();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1024, 768);
@@ -72,10 +75,10 @@ public class GUIPanel extends JFrame {
         detailsArea.setEditable(false);
 
         fromScroller = new JScrollPane(listFrom);
-        fromScroller.setPreferredSize(new Dimension(200, 228));
+        fromScroller.setPreferredSize(new Dimension(200, 230));
 
         toScroller = new JScrollPane(listTo);
-        toScroller.setPreferredSize(new Dimension(200, 228));
+        toScroller.setPreferredSize(new Dimension(200, 230));
 
         myPanel.setBackground(new Color(0xD6, 0xD9, 0xDF));
         myPanel.setLayout(currentLayout);
