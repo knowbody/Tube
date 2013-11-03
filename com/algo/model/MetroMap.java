@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public abstract class MetroMap {
-    private HashMap<String, Station> stations = new HashMap<String, Station>();
+    private HashMap<String, Station> stations = new HashMap<>();
 
     /**
      * Add new station to the map.
