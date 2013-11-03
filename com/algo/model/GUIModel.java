@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class GUIModel {
 
-    private PriorityQueue<Station> pq = new PriorityQueue<>();
+    private PriorityQueue<Station> pq = new PriorityQueue<Station>();
     private MetroMap prague = new PragueMetroMap();
     private String details;
 
