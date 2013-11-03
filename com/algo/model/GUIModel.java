@@ -49,10 +49,10 @@ public class GUIModel {
     }
 
     private void printResults(String fromStation, String toStation) {
-        details = "From: " + fromStation + "\n";
+        details = "FROM: " + fromStation + "\n";
         for (Station station : prague.getAllStations()) {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
-                details += "To: " + station.getName() + "\nDistance: " + station.getDistance() + "\nDescription:\n";
+                details += "TO: " + station.getName() + "\nDISTANCE: " + station.getDistance() + "\n\nDESCRIPTION:\n";
 
                 int numOfStations = station.getSPath().size();
 
@@ -63,20 +63,27 @@ public class GUIModel {
                     String nextStation;
                     String lineCurrent = lineName;
 
-                    i++;
+                    // to display beginning line to take
+                    if (i == 0) {
+                        lineName = s.getRouteLine(station.getSPath().get(i+1).getName());
+                        details += "*** Take line " + lineName + " ***\n";
+                        details += (i+1) + ") " + s.getName() + "\n";
+                        i++;
 
-                    details += s.getName() + "\n";
+                    } else {
+                        details += (i+1) + ") " + s.getName() + "\n";
+                        i++;
 
+                        // Getting next station if not last already
+                        if (i < numOfStations) {
+                            nextStation = station.getSPath().get(i).getName();
+                            lineName = s.getRouteLine(nextStation);
 
-                    // Getting next station if not last already
-                    if (i < numOfStations) {
-                        nextStation = station.getSPath().get(i).getName();
-                        lineName = s.getRouteLine(nextStation);
-
-                        // if the previous line is the same as next do nothing, otherwise say to change line
-                        if (lineCurrent.equalsIgnoreCase(lineName)) {
-                        } else {
-                            details += " - change for line " + lineName + "\n";
+                            // if the previous line is the same as next do nothing, otherwise say to change line
+                            if (lineCurrent.equalsIgnoreCase(lineName)) {
+                            } else {
+                                details += "*** change for line " + lineName + " ***\n";
+                            }
                         }
                     }
                 }
