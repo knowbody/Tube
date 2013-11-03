@@ -54,7 +54,7 @@ public class GUIPanel extends JFrame {
      * setting size, color, etc. of items and adding them to the panel
      */
     private void setupPanel() {
-
+    	// Switching looking and feel from ugly to less ugly
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -63,8 +63,8 @@ public class GUIPanel extends JFrame {
                 }
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
-        }
+            // Do nothing. Default look will be applied
+        }	
 
         JPanel myPanel = new JPanel();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
