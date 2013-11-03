@@ -4,19 +4,17 @@ import java.util.PriorityQueue;
 
 public class GUIModel {
 
-    private PriorityQueue<Station> pq = new PriorityQueue<Station>();
+    private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague = new PragueMetroMap();
     private String details;
 
     private void doSearch(String from, String to) {
-        String fromStation = from;
-        String toStation = to;
 
         // Getting brain new Prague tube instance
         prague = new PragueMetroMap();
 
         // Setting up starting point
-        prague.setFromStation(fromStation);
+        prague.setFromStation(from);
 
         // Setting up priority queue
         pq.addAll(prague.getAllStations());
@@ -25,7 +23,7 @@ public class GUIModel {
         dijkstra();
 
         // Print out result
-        printResults(fromStation, toStation); // to changed to toStation
+        printResults(from, to); // to changed to toStation
     }
 
     private void dijkstra() {
@@ -53,7 +51,7 @@ public class GUIModel {
     private void printResults(String fromStation, String toStation) {
         details = "From: " + fromStation + "\n";
         for (Station station : prague.getAllStations()) {
-            if (station.getName() == toStation || toStation == null) {
+            if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
                 details += "To: " + station.getName() + "\nDistance: " + station.getDistance() + "\nDescription:\n";
 
                 int numOfStations = station.getSPath().size();
@@ -99,6 +97,4 @@ public class GUIModel {
     public String getDetails() {
         return details;
     }
-
 }
-
