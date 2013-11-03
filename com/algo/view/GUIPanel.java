@@ -15,8 +15,8 @@ public class GUIPanel extends JFrame {
 
     private JLabel labelFrom;
     private JLabel labelTo;
-    private JList listFrom;
-    private JList listTo;
+    private JList<String> listFrom;
+    private JList<String> listTo;
     private JButton checkBtn;
     private JTextArea detailsArea;
     private SpringLayout currentLayout;
@@ -32,8 +32,8 @@ public class GUIPanel extends JFrame {
 
         labelFrom = new JLabel("From station:");
         labelTo = new JLabel("To station:");
-        listFrom = new JList(list.getAllStationsAsArray());
-        listTo = new JList(list.getAllStationsAsArray());
+        listFrom = new JList<String>(list.getAllStationsNamesAsArray());
+        listTo = new JList<String>(list.getAllStationsNamesAsArray());
 
         checkBtn = new JButton("Check");
         detailsArea = new JTextArea(15, 20);
@@ -55,7 +55,7 @@ public class GUIPanel extends JFrame {
 
         JPanel myPanel = new JPanel();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(1024, 768);
 
         detailsArea.setLineWrap(true);
         scrollPane = new JScrollPane(detailsArea);
