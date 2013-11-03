@@ -3,11 +3,12 @@
  */
 package com.algo.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 
 public abstract class MetroMap {
-    private ArrayList<Station> stations = new ArrayList<>(); // List of Metro stations
+    private HashMap<String, Station> stations = new HashMap<String, Station>();
 
     /**
      * Add new station to the map.
@@ -15,7 +16,7 @@ public abstract class MetroMap {
      * @param name of the station
      */
     public MetroMap addStation(String name) {
-        this.stations.add(new Station(name));
+        this.stations.put(name, new Station(name));
         return this;
     }
 
@@ -70,12 +71,7 @@ public abstract class MetroMap {
      * @return object representation of the station
      */
     public Station getStation(String name) {
-        for (Station s : this.stations) {
-            if (s.getName().equals(name)) {
-                return s;
-            }
-        }
-        return null;
+    	return this.stations.get(name);
     }
 
 
@@ -84,8 +80,8 @@ public abstract class MetroMap {
      *
      * @return All stations as ArrayList
      */
-    public ArrayList<Station> getAllStations() {
-        return this.stations;
+    public Collection<Station> getAllStations() {
+        return this.stations.values();
     }
 
 
@@ -98,7 +94,7 @@ public abstract class MetroMap {
         String[] arr = new String[this.getNumberOfStations()];
 
         int i = 0;
-        for (Station s : this.stations) {
+        for (Station s : this.getAllStations()) {
             arr[i] = s.getName();
             i++;
         }
@@ -124,7 +120,6 @@ public abstract class MetroMap {
      * @param s Station to be updated
      */
     private void updateStation(Station s) {
-        this.stations.remove(s);
-        this.stations.add(s);
+        this.stations.put(s.getName(), s);
     }
 }
