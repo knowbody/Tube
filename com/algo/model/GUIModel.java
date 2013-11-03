@@ -55,6 +55,7 @@ public class GUIModel {
         for (Station station : prague.getAllStations()) {
             if (station.getName() == toStation || toStation == null) {
                 details += "To: " + station.getName() + "\nDistance: " + station.getDistance() + "\nDescription:\n";
+
                 int numOfStations = station.getSPath().size();
 
                 String lineName = "";
@@ -64,8 +65,10 @@ public class GUIModel {
                     String nextStation;
                     String lineCurrent = lineName;
 
+                    i++;
+
                     details += s.getName() + "\n";
-                        details += "line " + s.getRouteLine(nextStation) + "\n"
+
 
                     // Getting next station if not last already
                     if (i < numOfStations) {
