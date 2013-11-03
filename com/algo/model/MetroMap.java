@@ -1,13 +1,22 @@
-/*
- * Ordinary Metro map
+/**
+ * Prague Metro - Journey Planner
+ * Project for - COMP1555: Algorithms and Modelling
+ * Authors:
+ *      Mateusz Zatorski (000738254)
+ *      Patrik Fuhrmann (000725089)
+ *      Irmantas Marozas (000708431)
  */
+
+/*
+* class defines all of the methods needed to build a map
+* */
 package com.algo.model;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
-public abstract class MetroMap {
+public class MetroMap {
     private HashMap<String, Station> stations = new HashMap<>();
 
     /**

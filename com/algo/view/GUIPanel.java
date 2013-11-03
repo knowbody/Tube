@@ -1,5 +1,15 @@
+/**
+ * Prague Metro - Journey Planner
+ * Project for - COMP1555: Algorithms and Modelling
+ * Authors:
+ *      Mateusz Zatorski (000738254)
+ *      Patrik Fuhrmann (000725089)
+ *      Irmantas Marozas (000708431)
+ */
+
 package com.algo.view;
 
+import com.algo.model.Clock;
 import com.algo.model.MetroMap;
 import com.algo.model.PragueMetroMap;
 
@@ -25,12 +35,14 @@ public class GUIPanel extends JFrame {
     private JScrollPane fromScroller;
     private JScrollPane scrollPane;
     private JLabel picLabel;
+    private Clock clock;
 
 
     public GUIPanel() throws IOException {
         super("Prague Metro - Journey Planner");
 
         MetroMap list = new PragueMetroMap();
+        clock = new Clock();
 
         labelFrom = new JLabel("From station:");
         labelTo = new JLabel("To station:");
@@ -88,6 +100,7 @@ public class GUIPanel extends JFrame {
         myPanel.add(labelFrom);
         myPanel.add(labelTo);
         myPanel.add(picLabel);
+        myPanel.add(clock);
 
         this.add(myPanel);
     }
@@ -124,6 +137,10 @@ public class GUIPanel extends JFrame {
         // IMAGE: Tube Map
         currentLayout.putConstraint(SpringLayout.WEST, picLabel, 160, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, picLabel, 290, SpringLayout.NORTH, this);
+
+        // CLOCK
+        currentLayout.putConstraint(SpringLayout.WEST, clock, 500, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.NORTH, clock, 20, SpringLayout.NORTH, this);
     }
 
     /**

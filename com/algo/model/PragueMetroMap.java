@@ -1,6 +1,15 @@
-/*
- * Prague Metro Map
+/**
+ * Prague Metro - Journey Planner
+ * Project for - COMP1555: Algorithms and Modelling
+ * Authors:
+ *      Mateusz Zatorski (000738254)
+ *      Patrik Fuhrmann (000725089)
+ *      Irmantas Marozas (000708431)
  */
+
+/*
+* class builds the prague metro map using inherited methods from MetroMap
+* */
 package com.algo.model;
 
 public class PragueMetroMap extends MetroMap {
