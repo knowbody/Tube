@@ -13,10 +13,11 @@
 package com.algo.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Station implements Comparable<Station> {
     private ArrayList<Route> routes = new ArrayList<>(); // Routes from the station
-    private ArrayList<Station> sPath = new ArrayList<>(); // Shortest path
+    private LinkedList<Station> sPath = new LinkedList<>(); // Shortest path stored in sequential list
     private String name; // Station name
     private Double distance = Double.POSITIVE_INFINITY;
 
@@ -46,7 +47,7 @@ public class Station implements Comparable<Station> {
         return null;
     }
 
-    public ArrayList<Station> getSPath() {
+    public LinkedList<Station> getSPath() {
         return this.sPath;
     }
 
