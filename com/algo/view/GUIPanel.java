@@ -52,7 +52,7 @@ public class GUIPanel extends JFrame {
         checkBtn = new JButton("Check");
         detailsArea = new JTextArea(15, 34);
 
-        BufferedImage tube = ImageIO.read(new File("src/tube.jpg"));
+        BufferedImage tube = ImageIO.read(new File("src/lib/img/tube.jpg"));
         picLabel = new JLabel(new ImageIcon(tube));
 
         currentLayout = new SpringLayout();
