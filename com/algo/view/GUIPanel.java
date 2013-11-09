@@ -21,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.Calendar;
 
 public class GUIPanel extends JFrame {
 
@@ -34,6 +36,9 @@ public class GUIPanel extends JFrame {
     private JScrollPane toScroller;
     private JScrollPane fromScroller;
     private JScrollPane scrollPane;
+    private JLabel labelDepart;    
+    private SpinnerModel departModel;    
+    private JSpinner departSpinner;
     private JLabel picLabel;
     private Clock clock;
 
@@ -52,6 +57,10 @@ public class GUIPanel extends JFrame {
         checkBtn = new JButton("Check");
         detailsArea = new JTextArea(15, 34);
 
+        labelDepart = new JLabel("Depart at");
+        Date date = new Date(0);
+        departModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);;
+        
         BufferedImage tube = ImageIO.read(new File("src/lib/img/tube.jpg"));
         picLabel = new JLabel(new ImageIcon(tube));
 
@@ -65,7 +74,7 @@ public class GUIPanel extends JFrame {
      * setting size, color, etc. of items and adding them to the panel
      */
     private void setupPanel() {
-    	// Switching looking and feel from ugly to less ugly
+    	// Switching look and feel from ugly to less ugly
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -91,6 +100,11 @@ public class GUIPanel extends JFrame {
         toScroller = new JScrollPane(listTo);
         toScroller.setPreferredSize(new Dimension(200, 230));
 
+        departSpinner = new JSpinner(departModel);
+        //mSpinner.setEditor(new JSpinner.NumberEditor(mSpinner, "00"));
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(departSpinner, "HH:mm");
+        departSpinner.setEditor(timeEditor);
+        
         myPanel.setBackground(new Color(0xD6, 0xD9, 0xDF));
         myPanel.setLayout(currentLayout);
         myPanel.add(scrollPane);
@@ -101,6 +115,8 @@ public class GUIPanel extends JFrame {
         myPanel.add(labelTo);
         myPanel.add(picLabel);
         myPanel.add(clock);
+        myPanel.add(labelDepart);
+        myPanel.add(departSpinner);
 
         this.add(myPanel);
     }
@@ -132,7 +148,7 @@ public class GUIPanel extends JFrame {
 
         // BUTTON: Check
         currentLayout.putConstraint(SpringLayout.WEST, checkBtn, 500, SpringLayout.WEST, this);
-        currentLayout.putConstraint(SpringLayout.NORTH, checkBtn, 140, SpringLayout.NORTH, this);
+        currentLayout.putConstraint(SpringLayout.NORTH, checkBtn, 150, SpringLayout.NORTH, this);
 
         // IMAGE: Tube Map
         currentLayout.putConstraint(SpringLayout.WEST, picLabel, 160, SpringLayout.WEST, this);
@@ -141,6 +157,14 @@ public class GUIPanel extends JFrame {
         // CLOCK
         currentLayout.putConstraint(SpringLayout.WEST, clock, 500, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, clock, 20, SpringLayout.NORTH, this);
+        
+        // Depart time label
+        currentLayout.putConstraint(SpringLayout.WEST, labelDepart, 505, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.NORTH, labelDepart, 90, SpringLayout.NORTH, this);
+        
+        // Depart time
+        currentLayout.putConstraint(SpringLayout.WEST, departSpinner, 505, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.NORTH, departSpinner, 110, SpringLayout.NORTH, this);
     }
 
     /**
