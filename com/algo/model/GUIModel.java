@@ -58,6 +58,10 @@ public class GUIModel {
     }
 
     private void printResults(String fromStation, String toStation) {
+    	if (fromStation.equalsIgnoreCase(toStation)) {
+    		details = "Destination of the route must be different as the starting point.";
+    		return;
+    	}
         details = "FROM: " + fromStation + "\n";
         for (Station station : prague.getAllStations()) {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
