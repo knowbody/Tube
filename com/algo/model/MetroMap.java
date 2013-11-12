@@ -1,15 +1,3 @@
-/**
- * Prague Metro - Journey Planner
- * Project for - COMP1555: Algorithms and Modelling
- * Authors:
- *      Mateusz Zatorski (000738254)
- *      Patrik Fuhrmann (000725089)
- *      Irmantas Marozas (000708431)
- */
-
-/*
-* class defines all of the methods needed to build a map
-* */
 package com.algo.model;
 
 import java.util.Arrays;
