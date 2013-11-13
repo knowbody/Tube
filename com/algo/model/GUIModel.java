@@ -10,7 +10,7 @@ public class GUIModel {
 
     private void doSearch(String from, String to) {
 
-        // Getting brain new Prague tube instance
+        // Getting brand new Prague tube instance
         prague = new PragueMetroMap();
 
         // Setting up starting point
@@ -19,19 +19,25 @@ public class GUIModel {
         // Setting up priority queue
         pq.addAll(prague.getAllStations());
 
-        // Run Dijkstra Algorithm
-        dijkstra();
+        // Dijkstra Algorithm
+        rudDijkstra();
 
         // Print out result
         printResults(from, to); // to changed to toStation
     }
 
-    private void dijkstra() {
+    /**
+     * Implementation of the Dijkstra algorithm
+     * using priority queue method.
+     */
+    private void rudDijkstra() {
         while (!pq.isEmpty()) { // While priority queue is not empty
             Station station = pq.remove(); // Remove station from priority queue
             station.getSPath().add(station); // Add station to current path
 
-            for (Route route : station.getAllRoutes()) { // Repeat this for all routes from station
+            ArrayList<Route> routes = station.getAllRoutes();
+            for (int i = 0; i < routes.getSize(); i++) {
+            	Route route = (Route) routes.get(i); // Repeat this for all routes from station
                 Station nextStation = route.getGoingTo(); // Next station in route
 
                 Double newDistance = route.getLength() + station.getDistance(); // Getting final distance
