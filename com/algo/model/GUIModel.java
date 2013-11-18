@@ -2,17 +2,20 @@ package com.algo.model;
 
 import java.util.PriorityQueue;
 
+import com.algo.structures.ArrayList;
+
+
 public class GUIModel {
 
     private PriorityQueue<Station> pq = new PriorityQueue<>();
-    private MetroMap prague = new PragueMetroMap();
+    private MetroMap prague;
     private String details;
 
     private void doSearch(String from, String to) {
 
         // Getting brand new Prague tube instance
         prague = new PragueMetroMap();
-
+  
         // Setting up starting point
         prague.setFromStation(from);
 
@@ -23,7 +26,7 @@ public class GUIModel {
         rudDijkstra();
 
         // Print out result
-        printResults(from, to); // to changed to toStation
+        printResults(from, to);
     }
 
     /**
@@ -59,6 +62,7 @@ public class GUIModel {
     		details = "Destination of the route must be different as the starting point.";
     		return;
     	}
+    	
         details = "FROM: " + fromStation + "\n";
         for (Station station : prague.getAllStations()) {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {

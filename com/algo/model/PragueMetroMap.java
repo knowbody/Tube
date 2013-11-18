@@ -7,7 +7,6 @@ public class PragueMetroMap extends MetroMap {
 
     public PragueMetroMap() {
         // Building up the Prague Tube!
-
         this.addStation("Dejvicka") // Stations
                 .addStation("Hradcanska")
                 .addStation("Malostranska")

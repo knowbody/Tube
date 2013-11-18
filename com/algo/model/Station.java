@@ -2,6 +2,9 @@ package com.algo.model;
 
 import java.util.LinkedList;
 
+import com.algo.structures.ArrayList;
+
+
 public class Station implements Comparable<Station> {
     private ArrayList<Route> routes = new ArrayList<>(); // Routes from the station
     private LinkedList<Station> sPath = new LinkedList<>(); // Shortest path stored in sequential list

@@ -17,9 +17,7 @@ import java.io.IOException;
 
 public class GUIRunner implements Runnable {
     public static void main(String[] args) throws IOException {
-
         EventQueue.invokeLater(new GUIRunner());
-
     }
 
     @Override

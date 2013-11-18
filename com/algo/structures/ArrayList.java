@@ -1,23 +1,22 @@
-package com.algo.model;
+package com.algo.structures;
 
 public class ArrayList<E> {
-	
 	private Object[] data; // Array for storing
 	private int size; // Number of elements in array
 	
 	/**
-	 * New list with initial length 20
+	 * New list with initial length 5
 	 */
 	public ArrayList() {
-		this(20);
+		this(5);
 	}
 	
 	/**
 	 * New list with preferred size
+	 * 
 	 * @param initialSize
 	 */
 	public ArrayList(int initialSize) {
-		super();
 		this.data = new Object[initialSize];
 	}
 	
@@ -27,11 +26,10 @@ public class ArrayList<E> {
 	 * @param e  Object to add
 	 * @return 
 	 */
-	public boolean add(E e) {
+	public void add(E e) {
 		resizeIfNeeded(size + 1);
 		data[size] = e;
 		size++;
-		return true;
 	}
 	 
 	
@@ -53,9 +51,19 @@ public class ArrayList<E> {
 	 * @param e  Element to set
 	 * @return
 	 */
-	public boolean set(int index, E e) {
+	public void set(int index, E e) {
 	    data[index] = e;
-		return true;
+	}
+	
+	/**
+	 * Remove element from the list
+	 * 
+	 * @param index  Index on which to set element
+	 * @param e  Element to set
+	 * @return
+	 */
+	public void remove(int index) {
+	    data[index] = null;
 	}
 	
 	
@@ -67,17 +75,26 @@ public class ArrayList<E> {
 	 */
 	public void resizeIfNeeded(int newSize) {
 		if (data.length < newSize) {
-			// Creating new array with double size and copying data
-			Object[] newData = new Object[size * 2];
-			for (int i = 0; i < size; i++) {
-				newData[i] = data[i];
-			}
-			data = newData;
+			resize();
 		}
 	}
 	
+	/**
+	 * Creating new array with double size and copying data
+	 */
+	public void resize() {
+		Object[] newData = new Object[data.length * 2];
+		for (int i = 0; i < size; i++) {
+			newData[i] = data[i];
+		}
+		data = newData;
+	}
 	
 	public int getSize() {
 		return size;
+	}
+	
+	public int getLength() {
+		return data.length;
 	}
 }

@@ -2,10 +2,13 @@ package com.algo.model;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+
+import com.algo.structures.HashTable;
+
 
 public class MetroMap {
-    private HashMap<String, Station> stations = new HashMap<>();
+    private HashTable stations = new HashTable();
+    private String[] stationsStringArr;
 
     /**
      * Add new station to the map.
@@ -31,14 +34,11 @@ public class MetroMap {
     public MetroMap addRoute(String from, String to, int length, String line) {
         Station sFrom = getStation(from);
         Station sTo = getStation(to);
-
+        
         // Adding route from - to
         sFrom.addRoute(sTo, length, line);
-        updateStation(sFrom);
-
         // Adding route to - from
         sTo.addRoute(sFrom, length, line);
-        updateStation(sTo);
 
         return this;
     }
@@ -55,8 +55,6 @@ public class MetroMap {
     public MetroMap setFromStation(String from) {
         Station station = getStation(from);
         station.setDistance(0.0);
-        this.updateStation(station);
-
         return this;
     }
 
@@ -68,7 +66,7 @@ public class MetroMap {
      * @return object representation of the station
      */
     public Station getStation(String name) {
-    	return this.stations.get(name);
+    	return (Station) this.stations.get(name);
     }
 
 
@@ -78,7 +76,7 @@ public class MetroMap {
      * @return All stations as ArrayList
      */
     public Collection<Station> getAllStations() {
-        return this.stations.values();
+    	return stations.getValues();
     }
 
 
@@ -88,17 +86,14 @@ public class MetroMap {
      * @return Stations names in array representation
      */
     public String[] getAllStationsNamesAsArray() {
-        String[] arr = new String[this.getNumberOfStations()];
-
-        int i = 0;
-        for (Station s : this.getAllStations()) {
-            arr[i] = s.getName();
-            i++;
-        }
-
-        Arrays.sort(arr); // Sorting alphabetically
-
-        return arr;
+    	// Checking if have to do hard work or it was done already
+    	if (stationsStringArr == null) {
+    		String[] arr = stations.getKeys();
+    		Arrays.sort(arr);
+    		stationsStringArr = arr;
+    	}
+        
+        return stationsStringArr;
     }
 
     /**
@@ -107,16 +102,6 @@ public class MetroMap {
      * @return Number of the stations
      */
     private int getNumberOfStations() {
-        return this.stations.size();
-    }
-
-
-    /**
-     * Updates specific station by new representation
-     *
-     * @param s Station to be updated
-     */
-    private void updateStation(Station s) {
-        this.stations.put(s.getName(), s);
+        return this.stations.getSize();
     }
 }
