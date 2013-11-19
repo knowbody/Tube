@@ -1,6 +1,6 @@
 /**
  * Implementation of the hash table using 
- * resizing array of buckets and linear probing.
+ * dynamic array of buckets and linear probing.
  * 
  * Load factor: 75%
  * Initial Capacity: 10;
@@ -131,8 +131,7 @@ public class HashTable {
 	 * @param newSize  Required size
 	 */
 	public void resizeIfNeeded(int newSize) {
-		int length = data.length;
-		double loadFactor = (double) newSize / length;
+		double loadFactor = (double) newSize / data.length;
 		
 		if (loadFactor > maxLoadFactor) {
 			resize();
