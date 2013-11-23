@@ -1,8 +1,8 @@
 package com.algo.model;
 
-import java.util.PriorityQueue;
-
 import com.algo.structures.ArrayList;
+
+import java.util.PriorityQueue;
 
 
 public class GUIModel {
