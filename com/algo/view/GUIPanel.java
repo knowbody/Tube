@@ -170,8 +170,6 @@ public class GUIPanel extends JFrame {
         // Depart time
         currentLayout.putConstraint(SpringLayout.WEST, departSpinner, 505, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, departSpinner, 110, SpringLayout.NORTH, this);
-
-
     }
 
     public void addToList(String el) {

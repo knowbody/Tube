@@ -9,7 +9,6 @@ public class GUIModel {
 
     private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague;
-    private String details;
     private ArrayList dt;
 
     private void doSearch(String from, String to) {
