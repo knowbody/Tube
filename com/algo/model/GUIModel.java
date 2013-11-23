@@ -76,7 +76,7 @@ public class GUIModel {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
                 dt.add("TO: " + station.getName());
                 dt.add("DISTANCE: " + station.getDistance());
-                dt.add("");
+                dt.add(" ");
                 dt.add("DESCRIPTION:");
 
                 int numOfStations = station.getSPath().size();
@@ -107,13 +107,13 @@ public class GUIModel {
                             // if the previous line is the same as next do nothing, otherwise say to change line
                             if (lineCurrent.equalsIgnoreCase(lineName)) {
                             } else {
-                                dt.add("");
+                                dt.add(" ");
                                 dt.add("*** change for line " + lineName + " ***");
                             }
                         }
                     }
                 }
-                dt.add("");
+                dt.add(" ");
             }
         }
     }

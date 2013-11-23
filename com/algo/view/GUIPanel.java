@@ -94,6 +94,7 @@ public class GUIPanel extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(1024, 768);
         detailsArea.setLineWrap(true);
+        jl.setCellRenderer(new StripeRenderer());
         scrollPane = new JScrollPane(jl);
         scrollPane.setPreferredSize(new Dimension(300, 230));
         detailsArea.setEditable(false);
@@ -108,7 +109,6 @@ public class GUIPanel extends JFrame {
         //mSpinner.setEditor(new JSpinner.NumberEditor(mSpinner, "00"));
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(departSpinner, "HH:mm");
         departSpinner.setEditor(timeEditor);
-
 
         myPanel.setBackground(new Color(0xD6, 0xD9, 0xDF));
         myPanel.setLayout(currentLayout);

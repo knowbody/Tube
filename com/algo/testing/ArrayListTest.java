@@ -1,10 +1,8 @@
 package com.algo.testing;
 
+import com.algo.structures.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.algo.model.MetroMap;
-import com.algo.structures.ArrayList;
 
 public class ArrayListTest {
 	
@@ -12,9 +10,9 @@ public class ArrayListTest {
 	@Before
 	public void beforeEachTest() {
 		al = new ArrayList();
-    	map.addStation("Station1");
+    	/*al.addStation("Station1");
 		map.addStation("Station2");
-		map.addStation("Station3");
+		map.addStation("Station3");*/
 	}
 
 	@Test
