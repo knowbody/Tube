@@ -1,14 +1,6 @@
 package com.algo.structures;
 
 public class PriorityQueue {
-    /**
-     * what methods we need
-     * addAll();
-     * isEmpty(); done
-     * remove(); done
-     * remove(par);
-     * add(par); done
-     */
 
     /**
      * WHAT IS PQ?

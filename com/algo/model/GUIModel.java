@@ -10,12 +10,13 @@ public class GUIModel {
     private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague;
     private String details;
+    private ArrayList dt;
 
     private void doSearch(String from, String to) {
 
         // Getting brand new Prague tube instance
         prague = new PragueMetroMap();
-  
+
         // Setting up starting point
         prague.setFromStation(from);
 
@@ -40,7 +41,7 @@ public class GUIModel {
 
             ArrayList<Route> routes = station.getAllRoutes();
             for (int i = 0; i < routes.getSize(); i++) {
-            	Route route = (Route) routes.get(i); // Repeat this for all routes from station
+                Route route = (Route) routes.get(i); // Repeat this for all routes from station
                 Station nextStation = route.getGoingTo(); // Next station in route
 
                 Double newDistance = route.getLength() + station.getDistance(); // Getting final distance
@@ -58,15 +59,26 @@ public class GUIModel {
     }
 
     private void printResults(String fromStation, String toStation) {
-    	if (fromStation.equalsIgnoreCase(toStation)) {
-    		details = "Destination of the route must be different as the starting point.";
-    		return;
-    	}
-    	
-        details = "FROM: " + fromStation + "\n";
+        dt = new ArrayList();
+        if (fromStation.equalsIgnoreCase(toStation)) {
+            dt.add("Destination of the route must be");
+            dt.add("different than the starting point.");
+            return;
+        } else if (fromStation == null) {
+            dt.add("Please select FROM station");
+            //return;
+        } else if (toStation == null) {
+            dt.add("Please select TO station");
+            return;
+        }
+
+        dt.add("FROM: " + fromStation + "\n");
         for (Station station : prague.getAllStations()) {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
-                details += "TO: " + station.getName() + "\nDISTANCE: " + station.getDistance() + "\n\nDESCRIPTION:\n";
+                dt.add("TO: " + station.getName());
+                dt.add("DISTANCE: " + station.getDistance());
+                dt.add("");
+                dt.add("DESCRIPTION:");
 
                 int numOfStations = station.getSPath().size();
 
@@ -79,13 +91,13 @@ public class GUIModel {
 
                     // to display beginning line to take
                     if (i == 0) {
-                        lineName = s.getRouteLine(station.getSPath().get(i+1).getName());
-                        details += "*** Take line " + lineName + " ***\n";
-                        details += (i+1) + ") " + s.getName() + "\n";
+                        lineName = s.getRouteLine(station.getSPath().get(i + 1).getName());
+                        dt.add("*** Take line " + lineName + " ***");
+                        dt.add((i + 1) + ") " + s.getName());
                         i++;
 
                     } else {
-                        details += (i+1) + ") " + s.getName() + "\n";
+                        dt.add((i + 1) + ") " + s.getName());
                         i++;
 
                         // Getting next station if not last already
@@ -96,12 +108,13 @@ public class GUIModel {
                             // if the previous line is the same as next do nothing, otherwise say to change line
                             if (lineCurrent.equalsIgnoreCase(lineName)) {
                             } else {
-                                details += "*** change for line " + lineName + " ***\n";
+                                dt.add("");
+                                dt.add("*** change for line " + lineName + " ***");
                             }
                         }
                     }
                 }
-                details += "\n";
+                dt.add("");
             }
         }
     }
@@ -115,7 +128,7 @@ public class GUIModel {
         doSearch(from, to);
     }
 
-    public String getDetails() {
-        return details;
+    public ArrayList getDetails() {
+        return dt;
     }
 }

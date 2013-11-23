@@ -1,9 +1,9 @@
 package com.algo.model;
 
+import com.algo.structures.HashTable;
+
 import java.util.Arrays;
 import java.util.Collection;
-
-import com.algo.structures.HashTable;
 
 
 public class MetroMap {
@@ -34,7 +34,7 @@ public class MetroMap {
     public MetroMap addRoute(String from, String to, int length, String line) {
         Station sFrom = getStation(from);
         Station sTo = getStation(to);
-        
+
         // Adding route from - to
         sFrom.addRoute(sTo, length, line);
         // Adding route to - from
@@ -66,7 +66,7 @@ public class MetroMap {
      * @return object representation of the station
      */
     public Station getStation(String name) {
-    	return (Station) this.stations.get(name);
+        return (Station) this.stations.get(name);
     }
 
 
@@ -76,7 +76,7 @@ public class MetroMap {
      * @return All stations as ArrayList
      */
     public Collection<Station> getAllStations() {
-    	return stations.getValues();
+        return stations.getValues();
     }
 
 
@@ -86,13 +86,13 @@ public class MetroMap {
      * @return Stations names in array representation
      */
     public String[] getAllStationsNamesAsArray() {
-    	// Checking if have to do hard work or it was done already
-    	if (stationsStringArr == null) {
-    		String[] arr = stations.getKeys();
-    		Arrays.sort(arr);
-    		stationsStringArr = arr;
-    	}
-        
+        // Checking if have to do hard work or it was done already
+        if (stationsStringArr == null) {
+            String[] arr = stations.getKeys();
+            Arrays.sort(arr);
+            stationsStringArr = arr;
+        }
+
         return stationsStringArr;
     }
 

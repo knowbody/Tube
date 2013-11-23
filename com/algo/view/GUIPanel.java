@@ -3,10 +3,11 @@ package com.algo.view;
 import com.algo.model.Clock;
 import com.algo.model.MetroMap;
 import com.algo.model.PragueMetroMap;
+import com.algo.structures.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.UIManager.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Vector;
 
 public class GUIPanel extends JFrame {
 
@@ -27,11 +29,13 @@ public class GUIPanel extends JFrame {
     private JScrollPane toScroller;
     private JScrollPane fromScroller;
     private JScrollPane scrollPane;
-    private JLabel labelDepart;    
-    private SpinnerModel departModel;    
+    private JLabel labelDepart;
+    private SpinnerModel departModel;
     private JSpinner departSpinner;
     private JLabel picLabel;
     private Clock clock;
+    private JList<String> jl;
+    private Vector<String> v;
 
 
     public GUIPanel() throws IOException {
@@ -50,10 +54,19 @@ public class GUIPanel extends JFrame {
 
         labelDepart = new JLabel("Depart at");
         Date date = new Date(0);
-        departModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);;
-        
+        departModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+        ;
+
         BufferedImage tube = ImageIO.read(new File("src/lib/img/tube.jpg"));
         picLabel = new JLabel(new ImageIcon(tube));
+
+
+        // Create a vector that can store String objects
+        v = new Vector<String>();
+
+        // Create a JList that is capable of storing String type items
+        jl = new JList<String>(v);
+
 
         currentLayout = new SpringLayout();
 
@@ -65,7 +78,7 @@ public class GUIPanel extends JFrame {
      * setting size, color, etc. of items and adding them to the panel
      */
     private void setupPanel() {
-    	// Switching look and feel from ugly to less ugly
+        // Switching look and feel from ugly to less ugly
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -75,14 +88,14 @@ public class GUIPanel extends JFrame {
             }
         } catch (Exception e) {
             // Do nothing. Default look will be applied
-        }	
+        }
 
         JPanel myPanel = new JPanel();
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(1024, 768);
-
         detailsArea.setLineWrap(true);
-        scrollPane = new JScrollPane(detailsArea);
+        scrollPane = new JScrollPane(jl);
+        scrollPane.setPreferredSize(new Dimension(300, 230));
         detailsArea.setEditable(false);
 
         fromScroller = new JScrollPane(listFrom);
@@ -95,7 +108,8 @@ public class GUIPanel extends JFrame {
         //mSpinner.setEditor(new JSpinner.NumberEditor(mSpinner, "00"));
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(departSpinner, "HH:mm");
         departSpinner.setEditor(timeEditor);
-        
+
+
         myPanel.setBackground(new Color(0xD6, 0xD9, 0xDF));
         myPanel.setLayout(currentLayout);
         myPanel.add(scrollPane);
@@ -148,15 +162,27 @@ public class GUIPanel extends JFrame {
         // CLOCK
         currentLayout.putConstraint(SpringLayout.WEST, clock, 500, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, clock, 20, SpringLayout.NORTH, this);
-        
+
         // Depart time label
         currentLayout.putConstraint(SpringLayout.WEST, labelDepart, 505, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, labelDepart, 90, SpringLayout.NORTH, this);
-        
+
         // Depart time
         currentLayout.putConstraint(SpringLayout.WEST, departSpinner, 505, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, departSpinner, 110, SpringLayout.NORTH, this);
+
+
     }
+
+    public void addToList(String el) {
+        // Add what the user types in JTextField jf, to the vector
+        v.add(el);
+    }
+
+    public void resetDisplay() {
+        v.removeAllElements();
+    }
+
 
     /**
      * @return name of the selected station from "From station:"
@@ -180,9 +206,15 @@ public class GUIPanel extends JFrame {
     }
 
     /**
-     * @param details takes String parameter to display it in the "details area"
+     * @param dt takes String parameter to display it in the "details area"
      */
-    public void setDisplay(String details) {
-        detailsArea.setText(details);
+    public void setDisplay(ArrayList dt) {
+        //detailsArea.setText(details);
+        for (int i = 0; i < dt.getSize(); i++) {
+            addToList((dt.get(i).toString()));
+        }
+
+        // Now set the updated vector to JList jl
+        jl.setListData(v);
     }
 }

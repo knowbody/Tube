@@ -19,17 +19,13 @@ public class GUIController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        view.resetDisplay();
         // button has to pass both values to the model, get the response and set view
         String from = view.getFromStation();
         String to = view.getToStation();
 
-        if (from == null) {
-            view.setDisplay("Please select FROM station");
-        } else if (to == null) {
-            view.setDisplay("Please select TO station");
-        } else {
-            model.setDoSearch(from, to);
-            view.setDisplay(model.getDetails());
-        }
+        model.setDoSearch(from, to);
+        view.setDisplay(model.getDetails());
+
     }
 }
