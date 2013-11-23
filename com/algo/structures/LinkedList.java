@@ -25,7 +25,6 @@ public class LinkedList<Station> implements Collection<Station> {
             l.next = newStation;
         }
         size++;
-        System.out.println("Linked list size:" + size);
     }
 
     @Override
@@ -83,7 +82,6 @@ public class LinkedList<Station> implements Collection<Station> {
         }
 
         size += numNew;
-        System.out.println("Linked list size:" + size);
         return true;
     }
 

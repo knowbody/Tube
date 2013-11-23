@@ -1,7 +1,6 @@
 package com.algo.model;
 
-import java.util.LinkedList;
-
+import com.algo.structures.LinkedList;
 import com.algo.structures.ArrayList;
 
 
@@ -30,7 +29,7 @@ public class Station implements Comparable<Station> {
 
     public String getRouteLine(String to) {
         for (int i = 0; i < this.routes.getSize(); i++) {
-        	Route route = (Route) this.routes.get(i);
+            Route route = (Route) this.routes.get(i);
             if (route.getGoingTo().name.equals(to)) {
                 return route.getLine();
             }
