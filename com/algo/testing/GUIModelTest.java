@@ -48,7 +48,7 @@ public class GUIModelTest {
         assertEquals(path.get(0).getName(), "Dejvicka");
         
         // Last station same as station to
-        assertEquals(path.get(path.size()).getName(), "Invalidovna");
+        assertEquals(path.get(path.size() - 1).getName(), "Invalidovna");
         
         // We know that 6th station should be Namesti Republiky
         assertEquals(path.get(5).getName(), "Namesti Republiky");

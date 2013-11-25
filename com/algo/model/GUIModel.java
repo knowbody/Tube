@@ -36,7 +36,7 @@ public class GUIModel {
     public void runDijkstra() {
         while (!pq.isEmpty()) { // While priority queue is not empty
             Station station = pq.remove(); // Remove station from priority queue
-            station.getSPath().add(station); // Add station to current path
+            station.addToSPath(station); // Add station to shortest path
 
             ArrayList<Route> routes = station.getAllRoutes();
             for (int i = 0; i < routes.getSize(); i++) {
@@ -84,13 +84,13 @@ public class GUIModel {
                 String lineName = "";
                 for (int i = 0; i < numOfStations; ) {
 
-                    Station s = station.getSPath().get(i);
+                    Station s = station.getFromSPath(i);
                     String nextStation;
                     String lineCurrent = lineName;
 
                     // to display beginning line to take
                     if (i == 0) {
-                        lineName = s.getRouteLine(station.getSPath().get(i + 1).getName());
+                        lineName = s.getRouteLine(station.getFromSPath(i + 1).getName());
                         dt.add("*** Take line " + lineName + " ***");
                         dt.add((i + 1) + ") " + s.getName());
                         i++;
@@ -101,7 +101,7 @@ public class GUIModel {
 
                         // Getting next station if not last already
                         if (i < numOfStations) {
-                            nextStation = station.getSPath().get(i).getName();
+                            nextStation = station.getFromSPath(i).getName();
                             lineName = s.getRouteLine(nextStation);
 
                             // if the previous line is the same as next do nothing, otherwise say to change line

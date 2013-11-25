@@ -12,7 +12,7 @@ public class ArrayListTest {
 	private ArrayList<String> al;
 	
 	@Before
-	public void beforeEachTest() {
+	public void beforeEachTest() throws Exception {
 		al = new ArrayList<String>();
 		al.add("String1");
 		al.add("String2");
@@ -21,7 +21,7 @@ public class ArrayListTest {
 	}
 
 	@Test
-	public void testAdd() {
+	public void testAdd() throws Exception {
 		al.add("String4");
 		
 		// Test size is increased after add
@@ -32,24 +32,24 @@ public class ArrayListTest {
 	}
 
 	@Test
-	public void testGet() {
+	public void testGet() throws Exception {
 		assertEquals(al.get(2), "String3");
 	}
 
 	@Test
-	public void testSet() {
+	public void testSet() throws Exception {
 		al.set(1, "StringNew");
 		assertEquals(al.get(1), "StringNew");
 	}
 
 	@Test
-	public void testRemove() {
+	public void testRemove() throws Exception {
 		al.remove(0);
 		assertEquals(al.get(0), null);
 	}
 
 	@Test
-	public void testResizeIfNeeded() {
+	public void testResizeIfNeeded() throws Exception {
 		// After adding 3 elements it should resize
 		// This is testing testing also Resize() method
 		al.add("String4");
@@ -60,12 +60,12 @@ public class ArrayListTest {
 	}
 
 	@Test
-	public void testGetSize() {
+	public void testGetSize() throws Exception {
 		assertEquals(al.getSize(), 3);
 	}
 
 	@Test
-	public void testGetLength() {
+	public void testGetLength() throws Exception {
 		assertEquals(al.getLength(), 5);
 	}
 
