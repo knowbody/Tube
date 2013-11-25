@@ -1,4 +1,4 @@
-package com.algo.testing;
+package com.algo.testing.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
