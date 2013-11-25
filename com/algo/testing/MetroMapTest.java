@@ -87,4 +87,5 @@ public class MetroMapTest {
 			assertEquals(stations[i], "Station" + (i + 1));
 		}
 	}
+	
 }

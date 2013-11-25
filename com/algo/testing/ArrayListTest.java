@@ -9,7 +9,8 @@ import com.algo.structures.ArrayList;
 
 public class ArrayListTest {
 	
-	ArrayList<String> al;
+	private ArrayList<String> al;
+	
 	@Before
 	public void beforeEachTest() {
 		al = new ArrayList<String>();
@@ -50,26 +51,22 @@ public class ArrayListTest {
 	@Test
 	public void testResizeIfNeeded() {
 		// After adding 3 elements it should resize
+		// This is testing testing also Resize() method
 		al.add("String4");
 		al.add("String5");
 		al.add("String6");
 		
-		assertEquals(al.getSize(), 10);
-	}
-
-	@Test
-	public void testResize() {
-		
+		assertEquals(al.getLength(), 10);
 	}
 
 	@Test
 	public void testGetSize() {
-		
+		assertEquals(al.getSize(), 3);
 	}
 
 	@Test
 	public void testGetLength() {
-		
+		assertEquals(al.getLength(), 5);
 	}
 
 }
