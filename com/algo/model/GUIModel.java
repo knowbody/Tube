@@ -23,7 +23,7 @@ public class GUIModel {
         pq.addAll(prague.getAllStations());
 
         // Dijkstra Algorithm
-        rudDijkstra();
+        runDijkstra();
 
         // Print out result
         printResults(from, to);
@@ -33,7 +33,7 @@ public class GUIModel {
      * Implementation of the Dijkstra algorithm
      * using priority queue method.
      */
-    private void rudDijkstra() {
+    public void runDijkstra() {
         while (!pq.isEmpty()) { // While priority queue is not empty
             Station station = pq.remove(); // Remove station from priority queue
             station.getSPath().add(station); // Add station to current path
@@ -129,5 +129,13 @@ public class GUIModel {
 
     public ArrayList<String> getDetails() {
         return dt;
+    }
+    
+    public void setMap(MetroMap map) {
+    	this.prague = map;
+    }
+    
+    public void setPQ(PriorityQueue<Station> pq) {
+    	this.pq = pq;
     }
 }
