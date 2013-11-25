@@ -43,7 +43,7 @@ public class HashTable {
 	public void put(String key, Object el) {
 		resizeIfNeeded(size + 1);
 		
-		int index = hashCode(key, data.length);
+		int index = generateHashCode(key, data.length);
 		boolean update = false;
 		
 		String s = el.toString();
@@ -72,7 +72,7 @@ public class HashTable {
 	 * @return  Requested object from key
 	 */
 	public Object get(String key) {
-		int index = hashCode(key, data.length);
+		int index = generateHashCode(key, data.length);
 
 		// Start linear probing
 		while (!key.equalsIgnoreCase(data[index].getKey())) {
@@ -89,7 +89,7 @@ public class HashTable {
 	 * @return  Requested object from key
 	 */
 	public void remove(String key) {
-		int index = hashCode(key, data.length);
+		int index = generateHashCode(key, data.length);
 
 		// Start linear probing
 		while (!key.equalsIgnoreCase(data[index].getKey())) {
@@ -119,7 +119,7 @@ public class HashTable {
 	 * @param key  String key
 	 * @return  Hash code
 	 */
-	public int hashCode(String key, int length) {
+	public int generateHashCode(String key, int length) {
 		int hash = Math.abs(key.hashCode());
 		return hash % length;
 	}
@@ -147,7 +147,7 @@ public class HashTable {
 		
 		for (int i = 0; i < length; i++) {
 			if (data[i] != null) {
-				int index = hashCode(data[i].getKey(), length * 2);
+				int index = generateHashCode(data[i].getKey(), length * 2);
 				// Start probing
 				while (newTable[index] != null) {
 					index = (index == (length * 2) - 1) ? 0 : index + 1;

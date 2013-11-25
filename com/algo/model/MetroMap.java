@@ -7,6 +7,7 @@ import java.util.Collection;
 
 
 public class MetroMap {
+	
     private HashTable stations = new HashTable();
     private String[] stationsStringArr;
 
@@ -101,7 +102,7 @@ public class MetroMap {
      *
      * @return Number of the stations
      */
-    private int getNumberOfStations() {
+    /*private int getNumberOfStations() {
         return this.stations.getSize();
-    }
+    }*/
 }

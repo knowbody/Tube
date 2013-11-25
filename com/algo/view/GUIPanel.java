@@ -55,7 +55,6 @@ public class GUIPanel extends JFrame {
         labelDepart = new JLabel("Depart at");
         Date date = new Date(0);
         departModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
-        ;
 
         BufferedImage tube = ImageIO.read(new File("src/lib/img/tube.jpg"));
         picLabel = new JLabel(new ImageIcon(tube));

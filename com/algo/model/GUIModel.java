@@ -9,7 +9,7 @@ public class GUIModel {
 
     private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague;
-    private ArrayList dt;
+    private ArrayList<String> dt;
 
     private void doSearch(String from, String to) {
 
@@ -58,7 +58,7 @@ public class GUIModel {
     }
 
     private void printResults(String fromStation, String toStation) {
-        dt = new ArrayList();
+        dt = new ArrayList<String>();
         if (fromStation.equalsIgnoreCase(toStation)) {
             dt.add("Destination of the route must be");
             dt.add("different than the starting point.");
@@ -127,7 +127,7 @@ public class GUIModel {
         doSearch(from, to);
     }
 
-    public ArrayList getDetails() {
+    public ArrayList<String> getDetails() {
         return dt;
     }
 }
