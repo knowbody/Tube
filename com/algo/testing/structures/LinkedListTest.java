@@ -65,8 +65,12 @@ public class LinkedListTest {
 	@Test
 	public void testRemove() throws Exception {
 		ll.remove(1);
+		// Test element is not present anymore
 		assertEquals(ll.get(0), "String1");
 		assertEquals(ll.get(1), "String3");
+		
+		// Test size is decreased
+		assertEquals(ll.size(), 2);
 	}
 
 	@Test

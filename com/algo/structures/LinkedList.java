@@ -75,10 +75,10 @@ public class LinkedList<E> {
 		Node<E> e = getNode(place);
 		e.prev.next = e.next; // Reseting previous node pointer to next
 		e.next.prev = e.prev; // Reseting next node pointer to previous
-		
 		// Setting up nulls for garbage collector to do his job
 		e.prev = e.next = null;
 		e.payload = null;
+		size--;
 	}
 	
 	/**
