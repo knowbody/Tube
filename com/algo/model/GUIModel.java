@@ -68,7 +68,10 @@ public class GUIModel {
         for (Station station : prague.getAllStations()) {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
                 dt.add("TO: " + station.getName());
-                dt.add("DISTANCE: " + station.getDistance());
+                // distance calculated (number of dots * 0.5 km)
+                dt.add("DISTANCE: " + (station.getDistance() * 0.5) + "km");
+                // total time calculated (average tube speed 9m/s)
+                dt.add("TOTAL TIME: " + (int)((station.getDistance() * 500)/9)/60 + "min");
                 dt.add(" ");
                 dt.add("DESCRIPTION:");
 
