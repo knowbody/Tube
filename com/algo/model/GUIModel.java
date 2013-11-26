@@ -73,9 +73,9 @@ public class GUIModel {
     	DateFormat dateFormat = new SimpleDateFormat("HH:mm");
     	String localTime = dateFormat.format(getTime());
     	setupCalendars();
-    	
         details = new ArrayList<String>(); 
         
+        // Checking different stations are chosen
         if (fromStation.equalsIgnoreCase(toStation)) {
             details.add("Destination of the route must be");
             details.add("different than the starting point.");
@@ -92,10 +92,10 @@ public class GUIModel {
                 details.add("DISTANCE: " + (station.getDistance() * 0.5) + "km"); // Distance calculated (number of dots * 0.5 km)
                 details.add("STARTING TIME: " + localTime); // Journey starting time
                 details.add(" ");
-                details.add("DESCRIPTION:");
+                details.add("ROUTE DESCRIPTION:");
 
                 String lineName = "";
-                long ranWaitTime = 0;
+                long ranChangeTime = 0; // Random change time
                 double totalJourneyTime = 0.0;
                 
                 int numOfStations = station.getSPath().size();
@@ -106,61 +106,66 @@ public class GUIModel {
  
                     // Display beginning line to take
                     if (i == 0) {
-                        lineName = s.getRouteLine(station.getFromSPath(i + 1).getName());
+                    	i++;
+                        lineName = s.getRouteLine(station.getFromSPath(i).getName());
                         details.add("*** Take line " + lineName + " ***");
-                        details.add((i + 1) + ") " + s.getName());
-                        i++;
+                        details.add(i + ") " + s.getName());
+                        
                         double total = (double) (((station.getFromSPath(i).getDistance() * 500) / 9) / 60);
                         totalJourneyTime += total;
                         details.add("Time to next station: " + (int) total + "min " + extractFractionAsSeconds(total) + "s");
                         localTime = dateFormat.format(addTime((int) total, extractFractionAsSeconds(total)).getTime());
                     } else {
-                        details.add((i + 1) + ") " + s.getName());
-                        i++;
+                    	i++;
+                        details.add(i + ") " + s.getName());
                         // Getting next station if not last already
                         if (i < numOfStations) {
                             // Total journey time between current and next station
-                            double total = (double) ((((station.getFromSPath(i).getDistance() - station.getFromSPath(i - 1).getDistance()) * 500) / 9) / 60);
+                            double timeToNextS = (double) ((((station.getFromSPath(i).getDistance() - station.getFromSPath(i - 1).getDistance()) * 500) / 9) / 60);
+                            localT = addTime((int) timeToNextS, extractFractionAsSeconds(timeToNextS)); // Adding local travelling time
  
-                            localT = addTime((int) total, extractFractionAsSeconds(total)); // adding journey time
- 
-                            if (ranWaitTime != 0) {
-                                totalJourneyTime += ranWaitTime;
-                                ranWaitTime = 0;
+                            // If we did get any random change time from previous run
+                            // append it here
+                            if (ranChangeTime != 0) {
+                                totalJourneyTime += ranChangeTime;
+                                ranChangeTime = 0;
                             }
  
+                            // Check if train is travelling after peak time
                             Boolean peak = false;
-                            if (localT.compareTo(offPeak) > 0) { // Check if train is travelling after peak time
+                            if (localT.compareTo(offPeak) > 0) { 
                                 peak = true;
                             }
  
-                            Boolean specialTime = false;
-                            // Checking if travelling during special signaling operation hours
+                            // If line C than checking if passenger will be 
+                            // travelling during special signalling operation hours
                             if (lineCurrent.equals("C")) {
                                 if ((localT.compareTo(diffSignal9AM) > 0 && localT.compareTo(diffSignal4PM) < 0) || (localT.compareTo(diffSignal7PM) > 0 && localT.compareTo(diffSignal12PM) < 0)) { // Check if train is travelling after peak time
-                                    specialTime = true;
-                                    total /= 2;
+                                    timeToNextS /= 2; // Make the travelling time between station half-shorter
                                 }
                             }
-                            totalJourneyTime += total;
-                            details.add("Time to next station: " + (int) total + "min " + extractFractionAsSeconds(total) + "s"
+                            
+                            details.add("Time to next station: " + (int) timeToNextS + "min " + extractFractionAsSeconds(timeToNextS) + "s"
                                     + " | Total time: " + (int) totalJourneyTime + "min " + extractFractionAsSeconds(totalJourneyTime) + "s");
- 
+                            totalJourneyTime += timeToNextS; 
+                            // Getting next station and observing line
                             nextStation = station.getFromSPath(i).getName();
                             lineName = s.getRouteLine(nextStation);
  
-                            // if the previous line is the same as next do nothing, otherwise say to change line
+                            // If the current line is different from previous line,
+                            // passenger needs to change.
                             if (!lineCurrent.equalsIgnoreCase(lineName)) {
                                 details.add(" ");
                                 details.add("*** change for line " + lineName + " ***");
+                                // Adding randomised changing times 
                                 if (peak) {
-                                    ranWaitTime = Math.round(Math.random() * 10);
+                                    ranChangeTime = Math.round(Math.random() * 10); // Random from 0 to 10 (minutes)
                                 } else {
-                                    ranWaitTime = Math.round(Math.random() * 3);
+                                    ranChangeTime = Math.round(Math.random() * 3); // Random from 0 to 3 (minutes)
                                 }
-                                if (ranWaitTime != 0) {
-                                    localT = addTime((int) ranWaitTime, 0); // add wait time
-                                    details.add("*** Wait for next train " + ranWaitTime + " min.");
+                                if (ranChangeTime != 0) {
+                                    localT = addTime((int) ranChangeTime, 0); // Adding wait time to local travelling time
+                                    details.add("*** Wait for next train " + ranChangeTime + " min.");
                                 }
                             }
                         }
@@ -234,15 +239,19 @@ public class GUIModel {
         
         diffSignal9AM.setTime(time);
         diffSignal9AM.set(Calendar.HOUR_OF_DAY, 9);
+        diffSignal9AM.set(Calendar.MINUTE, 0);
         
         diffSignal4PM.setTime(time);
         diffSignal4PM.set(Calendar.HOUR_OF_DAY, 16);
+        diffSignal4PM.set(Calendar.MINUTE, 0);
         
         diffSignal7PM.setTime(time);
         diffSignal7PM.set(Calendar.HOUR_OF_DAY, 19);
+        diffSignal7PM.set(Calendar.MINUTE, 0);
         
         diffSignal12PM.setTime(time);
         diffSignal12PM.set(Calendar.HOUR_OF_DAY, 24);
+        diffSignal12PM.set(Calendar.MINUTE, 0);
     }
     
     // Dependency injection for testing
