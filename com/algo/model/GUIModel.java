@@ -12,16 +12,17 @@ public class GUIModel {
  
     private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague;
-    private ArrayList<String> dt;
+    private ArrayList<String> details; // Details for printing results
     private Date time;
-    DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-    Calendar cal = Calendar.getInstance();
-    Calendar localT = Calendar.getInstance();
-    Calendar offPeak = Calendar.getInstance();
-    Calendar diffSignal9AM = Calendar.getInstance();
-    Calendar diffSignal4PM = Calendar.getInstance();
-    Calendar diffSignal7PM = Calendar.getInstance();
-    Calendar diffSignal12PM = Calendar.getInstance();
+
+    // Calendars for time comparisons
+    private Calendar cal = Calendar.getInstance();
+    private Calendar localT = Calendar.getInstance();
+    private Calendar offPeak = Calendar.getInstance();
+    private Calendar diffSignal9AM = Calendar.getInstance();
+    private Calendar diffSignal4PM = Calendar.getInstance();
+    private Calendar diffSignal7PM = Calendar.getInstance();
+    private Calendar diffSignal12PM = Calendar.getInstance();
  
     private void doSearch(String from, String to) {
         // Getting brand new Prague tube instance
@@ -68,68 +69,60 @@ public class GUIModel {
     }
  
     private void printResults(String fromStation, String toStation) {
-        // setting up calendars for time comparison
-        offPeak.setTime(time);
-        localT.setTime(time);
-        diffSignal9AM.setTime(time);
-        diffSignal4PM.setTime(time);
-        diffSignal7PM.setTime(time);
-        diffSignal12PM.setTime(time);
-        offPeak.set(Calendar.HOUR_OF_DAY, 9);
-        offPeak.set(Calendar.MINUTE, 30);
-        diffSignal9AM.set(Calendar.HOUR_OF_DAY, 9);
-        diffSignal4PM.set(Calendar.HOUR_OF_DAY, 16);
-        diffSignal7PM.set(Calendar.HOUR_OF_DAY, 19);
-        diffSignal12PM.set(Calendar.HOUR_OF_DAY, 24);
- 
-        dt = new ArrayList();
+    	// Dates stuff
+    	DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+    	String localTime = dateFormat.format(getTime());
+    	setupCalendars();
+    	
+        details = new ArrayList<String>(); 
+        
         if (fromStation.equalsIgnoreCase(toStation)) {
-            dt.add("Destination of the route must be");
-            dt.add("different than the starting point.");
+            details.add("Destination of the route must be");
+            details.add("different than the starting point.");
             return;
         }
-        dt.add("FROM: " + fromStation + "\n");
+        
+        // Traverse all stations from the map
         for (Station station : prague.getAllStations()) {
-            if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
-                String localTime = dateFormat.format(getTime());
-                dt.add("TO: " + station.getName());
-                // distance calculated (number of dots * 0.5 km)
-                dt.add("DISTANCE: " + (station.getDistance() * 0.5) + "km");
-                // total time calculated (average tube speed 9m/s)
- 
-                dt.add("STARTING TIME: " + localTime);
-                dt.add(" ");
-                dt.add("DESCRIPTION:");
-                int numOfStations = station.getSPath().size();
- 
+        	// Do all the printing just for the desired station to
+            if (station.getName().equalsIgnoreCase(toStation) || toStation == null) { 
+                // List head
+                details.add("FROM: " + fromStation + "\n");
+                details.add("TO: " + station.getName());
+                details.add("DISTANCE: " + (station.getDistance() * 0.5) + "km"); // Distance calculated (number of dots * 0.5 km)
+                details.add("STARTING TIME: " + localTime); // Journey starting time
+                details.add(" ");
+                details.add("DESCRIPTION:");
+
                 String lineName = "";
                 long ranWaitTime = 0;
                 double totalJourneyTime = 0.0;
+                
+                int numOfStations = station.getSPath().size();
                 for (int i = 0; i < numOfStations;) {
                     Station s = station.getFromSPath(i);
                     String nextStation;
                     String lineCurrent = lineName;
  
-                    // to display beginning line to take
+                    // Display beginning line to take
                     if (i == 0) {
-                        cal.setTime(time);
                         lineName = s.getRouteLine(station.getFromSPath(i + 1).getName());
-                        dt.add("*** Take line " + lineName + " ***");
-                        dt.add((i + 1) + ") " + s.getName());
+                        details.add("*** Take line " + lineName + " ***");
+                        details.add((i + 1) + ") " + s.getName());
                         i++;
                         double total = (double) (((station.getFromSPath(i).getDistance() * 500) / 9) / 60);
                         totalJourneyTime += total;
-                        dt.add("Time to next station: " + (int) total + "min " + convertTime(total) + "s");
-                        localTime = dateFormat.format(addTime((int) total, convertTime(total)).getTime());
+                        details.add("Time to next station: " + (int) total + "min " + extractFractionAsSeconds(total) + "s");
+                        localTime = dateFormat.format(addTime((int) total, extractFractionAsSeconds(total)).getTime());
                     } else {
-                        dt.add((i + 1) + ") " + s.getName());
+                        details.add((i + 1) + ") " + s.getName());
                         i++;
                         // Getting next station if not last already
                         if (i < numOfStations) {
                             // Total journey time between current and next station
                             double total = (double) ((((station.getFromSPath(i).getDistance() - station.getFromSPath(i - 1).getDistance()) * 500) / 9) / 60);
  
-                            localT = addTime((int) total, convertTime(total)); // adding journey time
+                            localT = addTime((int) total, extractFractionAsSeconds(total)); // adding journey time
  
                             if (ranWaitTime != 0) {
                                 totalJourneyTime += ranWaitTime;
@@ -150,16 +143,16 @@ public class GUIModel {
                                 }
                             }
                             totalJourneyTime += total;
-                            dt.add("Time to next station: " + (int) total + "min " + convertTime(total) + "s"
-                                    + " | Total time: " + (int) totalJourneyTime + "min " + convertTime(totalJourneyTime) + "s");
+                            details.add("Time to next station: " + (int) total + "min " + extractFractionAsSeconds(total) + "s"
+                                    + " | Total time: " + (int) totalJourneyTime + "min " + extractFractionAsSeconds(totalJourneyTime) + "s");
  
                             nextStation = station.getFromSPath(i).getName();
                             lineName = s.getRouteLine(nextStation);
  
                             // if the previous line is the same as next do nothing, otherwise say to change line
                             if (!lineCurrent.equalsIgnoreCase(lineName)) {
-                                dt.add(" ");
-                                dt.add("*** change for line " + lineName + " ***");
+                                details.add(" ");
+                                details.add("*** change for line " + lineName + " ***");
                                 if (peak) {
                                     ranWaitTime = Math.round(Math.random() * 10);
                                 } else {
@@ -167,13 +160,13 @@ public class GUIModel {
                                 }
                                 if (ranWaitTime != 0) {
                                     localT = addTime((int) ranWaitTime, 0); // add wait time
-                                    dt.add("*** Wait for next train " + ranWaitTime + " min.");
+                                    details.add("*** Wait for next train " + ranWaitTime + " min.");
                                 }
                             }
                         }
                     }
                 }
-                dt.add(" ");
+                details.add(" ");
             }
         }
     }
@@ -188,15 +181,7 @@ public class GUIModel {
     }
  
     public ArrayList<String> getDetails() {
-        return dt;
-    }
- 
-    public void setMap(MetroMap map) {
-        this.prague = map;
-    }
- 
-    public void setPQ(PriorityQueue<Station> pq) {
-        this.pq = pq;
+        return details;
     }
  
     public void setTime(Date time) {
@@ -207,18 +192,65 @@ public class GUIModel {
         return time;
     }
  
-    private int convertTime(double total) {
-        int whole = (int) total;
-        double fraction = total - whole;
+    /**
+     * Convert minutes fractions to actual seconds
+     * 
+     * @param totalM  Minutes with fraction
+     * @return Number of seconds
+     */
+    private int extractFractionAsSeconds(double totalM) {
+        int whole = (int) totalM;
+        double fraction = totalM - whole;
         fraction = fraction * 0.6;
         double fractionR = Math.round(fraction * 100.0);
  
         return (int) fractionR;
     }
  
+    /**
+     * Append time to calendar
+     * 
+     * @param m  Minutes
+     * @param s  Seconds
+     * @return
+     */
     private Calendar addTime(int m, int s) {
         cal.add(Calendar.MINUTE, m);
         cal.add(Calendar.SECOND, s);
         return cal;
+    }
+    
+    /**
+     * Setting up calendars for time comparisons
+     */
+    private void setupCalendars() {
+    	cal.setTime(time);
+    	
+        offPeak.setTime(time);
+        offPeak.set(Calendar.HOUR_OF_DAY, 9);
+        offPeak.set(Calendar.MINUTE, 30);
+        
+        localT.setTime(time);
+        
+        diffSignal9AM.setTime(time);
+        diffSignal9AM.set(Calendar.HOUR_OF_DAY, 9);
+        
+        diffSignal4PM.setTime(time);
+        diffSignal4PM.set(Calendar.HOUR_OF_DAY, 16);
+        
+        diffSignal7PM.setTime(time);
+        diffSignal7PM.set(Calendar.HOUR_OF_DAY, 19);
+        
+        diffSignal12PM.setTime(time);
+        diffSignal12PM.set(Calendar.HOUR_OF_DAY, 24);
+    }
+    
+    // Dependency injection for testing
+    public void setMap(MetroMap map) {
+        this.prague = map;
+    }
+    // Dependency injection for testing
+    public void setPQ(PriorityQueue<Station> pq) {
+        this.pq = pq;
     }
 }
