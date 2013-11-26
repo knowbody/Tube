@@ -94,11 +94,11 @@ public class GUIPanel extends JFrame {
 
         JPanel myPanel = new JPanel();
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(1024, 768);
+        this.setSize(1124, 768);
         detailsArea.setLineWrap(true);
         jl.setCellRenderer(new StripeRenderer());
         scrollPane = new JScrollPane(jl);
-        scrollPane.setPreferredSize(new Dimension(380, 230));
+        scrollPane.setPreferredSize(new Dimension(380, 680));
         detailsArea.setEditable(false);
 
         fromScroller = new JScrollPane(listFrom);
@@ -145,7 +145,7 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, toScroller, 40, SpringLayout.NORTH, this);
 
         // DETAILS AREA: Journey description
-        currentLayout.putConstraint(SpringLayout.WEST, scrollPane, 615, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, scrollPane, 715, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, scrollPane, 40, SpringLayout.NORTH, this);
 
         // BUTTON: Check
@@ -153,7 +153,7 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, checkBtn, 150, SpringLayout.NORTH, this);
 
         // IMAGE: Tube Map
-        currentLayout.putConstraint(SpringLayout.WEST, picLabel, 160, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, picLabel, 20, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, picLabel, 290, SpringLayout.NORTH, this);
 
         // CLOCK

@@ -157,7 +157,10 @@ public class GUIModel {
                             
                             details.add("Time to next station: " + (int) timeToNextS + "min " + extractFractionAsSeconds(timeToNextS) + "s"
                                     + " | Total: " + (int) totalJourneyTime + "min " + extractFractionAsSeconds(totalJourneyTime) + "s");
-                            totalJourneyTime += timeToNextS; 
+                            
+                            // Updating total journey time
+                            totalJourneyTime += timeToNextS;
+                            
                             // Getting next station and observing line
                             nextStation = station.getFromSPath(i).getName();
                             lineName = s.getRouteLine(nextStation);
@@ -175,7 +178,7 @@ public class GUIModel {
                                 }
                                 if (ranChangeTime != 0) {
                                     localT = addTime((int) ranChangeTime, 0); // Adding wait time to local travelling time
-                                    details.add("*** Wait for next train " + ranChangeTime + " minutes ***");
+                                    details.add("*** Wait for the next train: " + ranChangeTime + " minutes ***");
                                 }
                             }
                         }
