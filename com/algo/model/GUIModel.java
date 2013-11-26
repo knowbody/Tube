@@ -10,6 +10,7 @@ public class GUIModel {
     private PriorityQueue<Station> pq = new PriorityQueue<>();
     private MetroMap prague;
     private ArrayList<String> dt;
+    private String time;
 
     private void doSearch(String from, String to) {
         // Getting brand new Prague tube instance
@@ -71,7 +72,7 @@ public class GUIModel {
                 dt.add("DISTANCE: " + (station.getDistance() * 0.5) + "km");
                 // total time calculated (average tube speed 9m/s)
                 dt.add("TOTAL TIME: " + (int)((station.getDistance() * 500)/9)/60 + "min");
-                dt.add(" ");
+                dt.add(getTime());
                 dt.add("DESCRIPTION:");
 
                 int numOfStations = station.getSPath().size();
@@ -132,5 +133,13 @@ public class GUIModel {
 
     public void setPQ(PriorityQueue<Station> pq) {
         this.pq = pq;
+    }
+    
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
     }
 }

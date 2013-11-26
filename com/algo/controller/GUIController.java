@@ -24,6 +24,9 @@ public class GUIController implements ActionListener {
         String from = view.getFromStation();
         String to = view.getToStation();
 
+
+        model.setTime(view.getTime());
+
         if (from != null && to != null) {
             model.setDoSearch(from, to);
             view.setDisplay(model.getDetails());
