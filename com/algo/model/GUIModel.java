@@ -71,8 +71,9 @@ public class GUIModel {
                 // distance calculated (number of dots * 0.5 km)
                 dt.add("DISTANCE: " + (station.getDistance() * 0.5) + "km");
                 // total time calculated (average tube speed 9m/s)
-                dt.add("TOTAL TIME: " + (int)((station.getDistance() * 500)/9)/60 + "min");
-                dt.add(getTime());
+                dt.add("AVERAGE TOTAL TIME: " + (int)((station.getDistance() * 500)/9)/60 + " min");
+                dt.add("STARTING TIME: " + getTime());
+                dt.add(" ");
                 dt.add("DESCRIPTION:");
 
                 int numOfStations = station.getSPath().size();
@@ -90,13 +91,18 @@ public class GUIModel {
                         dt.add("*** Take line " + lineName + " ***");
                         dt.add((i + 1) + ") " + s.getName());
                         i++;
-
+                        double total = (double)(((station.getFromSPath(i).getDistance() * 500)/9)/60);
+                    	dt.add("Time to next station: " + (int)total + "min "+convertTime(total)+"s");
                     } else {
                         dt.add((i + 1) + ") " + s.getName());
                         i++;
 
                         // Getting next station if not last already
                         if (i < numOfStations) {
+                        	double total = (double)((((station.getFromSPath(i).getDistance() - station.getFromSPath(i-1).getDistance()) * 500)/9)/60);
+                        	double totalJourneyTime = (double)(((station.getFromSPath(i).getDistance() * 500)/9)/60);
+                        	dt.add("Time to next station: " + (int)total + "min " + convertTime(total) + "s" +
+                                	" | Total time: " +(int)totalJourneyTime + "min " + convertTime(totalJourneyTime) + "s");
                             nextStation = station.getFromSPath(i).getName();
                             lineName = s.getRouteLine(nextStation);
 
@@ -142,4 +148,13 @@ public class GUIModel {
     public String getTime() {
         return time;
     }
+    
+    private int convertTime(double total){
+    	int whole = (int)total;
+    	double fraction = total-whole;
+    	fraction = fraction*0.6;
+    	double fractionR = Math.round(fraction*100.0);
+    	
+    	return (int)fractionR;
+	}
 }
