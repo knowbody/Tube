@@ -40,11 +40,11 @@ public class Station implements Comparable<Station> {
     public LinkedList<Station> getSPath() {
         return this.sPath;
     }
-    
+
     public Station getFromSPath(int index) {
         return this.sPath.get(index);
     }
-    
+
     public void addToSPath(Station s) {
         this.sPath.add(s);
     }

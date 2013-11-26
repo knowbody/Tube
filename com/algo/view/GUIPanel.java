@@ -61,10 +61,10 @@ public class GUIPanel extends JFrame {
 
 
         // Create a vector that can store String objects
-        v = new Vector<String>();
+        v = new Vector();
 
         // Create a JList that is capable of storing String type items
-        jl = new JList<String>(v);
+        jl = new JList(v);
 
 
         currentLayout = new SpringLayout();
@@ -215,6 +215,7 @@ public class GUIPanel extends JFrame {
         jl.setListData(v);
     }
 
+    // display error message when user doesn't choose station TO and FROM
     public void setDisplay(String error) {
         addToList(error);
         jl.setListData(v);

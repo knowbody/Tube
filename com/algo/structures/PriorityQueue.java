@@ -8,12 +8,12 @@ public class PriorityQueue {
      * First takes 15 mins, second 10 mins, 3rd - 3 mins, 4th - 6 mins
      * <-- 15 mins <-- 10 mins <-- 3 mins <-- 6 mins <--
      * So the average waiting time is (15 + (15 + 10) + (15 + 10 + 3) + (15 + 10 + 3 + 6)) / 4 (people) = 25.5 mins
-     *
+     * <p/>
      * if we sort people in the queue by their time we get:
      * <-- 3 mins <-- 6 mins <-- 10 mins <-- 15 mins <--
      * So average in this case:
      * (3 + (3 + 6) + (3 + 6 + 10) + (3 + 6 + 10 + 15)) / 4 = 16.25 mins
-     * */
+     */
 
     // array in sorted order, from max at 0 to min at size-1
     private int maxSize;

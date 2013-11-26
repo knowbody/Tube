@@ -28,6 +28,7 @@ public class GUIController implements ActionListener {
             model.setDoSearch(from, to);
             view.setDisplay(model.getDetails());
         } else {
+            // display error message when user doesn't choose station TO and FROM
             view.setDisplay("Please choose FROM and TO station.");
         }
     }

@@ -58,19 +58,12 @@ public class GUIModel {
     }
 
     private void printResults(String fromStation, String toStation) {
-        dt = new ArrayList<String>();
+        dt = new ArrayList();
         if (fromStation.equalsIgnoreCase(toStation)) {
             dt.add("Destination of the route must be");
             dt.add("different than the starting point.");
             return;
-        } else if (fromStation == null) {
-            dt.add("Please select FROM station");
-            //return;
-        } else if (toStation == null) {
-            dt.add("Please select TO station");
-            return;
         }
-
         dt.add("FROM: " + fromStation + "\n");
         for (Station station : prague.getAllStations()) {
             if (station.getName().equalsIgnoreCase(toStation) || toStation == null) {
@@ -130,12 +123,12 @@ public class GUIModel {
     public ArrayList<String> getDetails() {
         return dt;
     }
-    
+
     public void setMap(MetroMap map) {
-    	this.prague = map;
+        this.prague = map;
     }
-    
+
     public void setPQ(PriorityQueue<Station> pq) {
-    	this.pq = pq;
+        this.pq = pq;
     }
 }
