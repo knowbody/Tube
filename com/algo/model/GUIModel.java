@@ -23,6 +23,7 @@ public class GUIModel {
     private Calendar diffSignal4PM = Calendar.getInstance();
     private Calendar diffSignal7PM = Calendar.getInstance();
     private Calendar diffSignal12PM = Calendar.getInstance();
+    private Calendar closingTime, openingTime = Calendar.getInstance();
  
     private void doSearch(String from, String to) {
         // Getting brand new Prague tube instance
@@ -79,6 +80,13 @@ public class GUIModel {
         if (fromStation.equalsIgnoreCase(toStation)) {
             details.add("Destination of the route must be");
             details.add("different than the starting point.");
+            return;
+        }
+        
+        // Checking if the tube is open at the time specified
+        if (localT.compareTo(openingTime) < 0 || localT.compareTo(diffSignal12PM) > 0) {
+        	details.add("Sorry, Metro is closed at that time.");
+            details.add("Opening time: 05:00 - Closing time: 00:00");
             return;
         }
         
@@ -140,8 +148,8 @@ public class GUIModel {
                             // If line C than checking if passenger will be 
                             // travelling during special signalling operation hours
                             if (lineCurrent.equals("C")) {
-                                if ((localT.compareTo(diffSignal9AM) > 0 && localT.compareTo(diffSignal4PM) < 0) || (localT.compareTo(diffSignal7PM) > 0 && localT.compareTo(diffSignal12PM) < 0)) { // Check if train is travelling after peak time
-                                    timeToNextS /= 2; // Make the travelling time between station half-shorter
+                                if ((localT.compareTo(diffSignal9AM) > 0 && localT.compareTo(diffSignal4PM) < 0) || (localT.compareTo(diffSignal7PM) > 0 && localT.compareTo(diffSignal12PM) < 0)) { 
+                                    timeToNextS /= 2; // Make the travelling time between station half-faster
                                 }
                             }
                             
@@ -156,7 +164,7 @@ public class GUIModel {
                             // passenger needs to change.
                             if (!lineCurrent.equalsIgnoreCase(lineName)) {
                                 details.add(" ");
-                                details.add("*** change for line " + lineName + " ***");
+                                details.add("*** Change for line " + lineName + " ***");
                                 // Adding randomised changing times 
                                 if (peak) {
                                     ranChangeTime = Math.round(Math.random() * 10); // Random from 0 to 10 (minutes)
@@ -171,7 +179,10 @@ public class GUIModel {
                         }
                     }
                 }
+                details.add("*** Get of the station ***");
                 details.add(" ");
+                details.add("TOTAL JOURNEY TIME: " + (int) totalJourneyTime + "min " + extractFractionAsSeconds(totalJourneyTime) + "s");
+                details.add("TIME OF ARRIVAL: " + dateFormat.format(localT.getTime()));
             }
         }
     }
@@ -252,6 +263,10 @@ public class GUIModel {
         diffSignal12PM.setTime(time);
         diffSignal12PM.set(Calendar.HOUR_OF_DAY, 24);
         diffSignal12PM.set(Calendar.MINUTE, 0);
+        
+        openingTime.setTime(time);
+        openingTime.set(Calendar.HOUR_OF_DAY, 5);
+        openingTime.set(Calendar.MINUTE, 0);
     }
     
     // Dependency injection for testing
