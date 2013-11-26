@@ -12,7 +12,6 @@ public class GUIModel {
     private ArrayList<String> dt;
 
     private void doSearch(String from, String to) {
-
         // Getting brand new Prague tube instance
         prague = new PragueMetroMap();
 

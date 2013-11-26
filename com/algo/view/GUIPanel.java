@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 public class GUIPanel extends JFrame {
@@ -214,5 +217,13 @@ public class GUIPanel extends JFrame {
     public void setDisplay(String error) {
         addToList(error);
         jl.setListData(v);
+    }
+
+    // getting the time from the spinner
+    public String getTime() {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        Date time = (Date)spinner.getValue();
+        String formattedDate = dateFormat.format(time);
+        return formattedDate;
     }
 }
