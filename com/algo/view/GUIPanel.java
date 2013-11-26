@@ -13,8 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.Vector;
 
 public class GUIPanel extends JFrame {
@@ -30,12 +28,12 @@ public class GUIPanel extends JFrame {
     private JScrollPane fromScroller;
     private JScrollPane scrollPane;
     private JLabel labelDepart;
-    private SpinnerModel departModel;
-    private JSpinner departSpinner;
+    private JSpinner spinner;
     private JLabel picLabel;
     private Clock clock;
     private JList<String> jl;
     private Vector<String> v;
+
 
 
     public GUIPanel() throws IOException {
@@ -53,8 +51,10 @@ public class GUIPanel extends JFrame {
         detailsArea = new JTextArea(15, 34);
 
         labelDepart = new JLabel("Depart at");
-        Date date = new Date(0);
-        departModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+        spinner = new JSpinner();
+        spinner.setModel(new SpinnerDateModel());
+        spinner.setEditor(new JSpinner.DateEditor(spinner, "HH:mm"));
+
 
         BufferedImage tube = ImageIO.read(new File("src/lib/img/tube.jpg"));
         picLabel = new JLabel(new ImageIcon(tube));
@@ -104,11 +104,6 @@ public class GUIPanel extends JFrame {
         toScroller = new JScrollPane(listTo);
         toScroller.setPreferredSize(new Dimension(200, 230));
 
-        departSpinner = new JSpinner(departModel);
-        //mSpinner.setEditor(new JSpinner.NumberEditor(mSpinner, "00"));
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(departSpinner, "HH:mm");
-        departSpinner.setEditor(timeEditor);
-
         myPanel.setBackground(new Color(0xD6, 0xD9, 0xDF));
         myPanel.setLayout(currentLayout);
         myPanel.add(scrollPane);
@@ -120,7 +115,7 @@ public class GUIPanel extends JFrame {
         myPanel.add(picLabel);
         myPanel.add(clock);
         myPanel.add(labelDepart);
-        myPanel.add(departSpinner);
+        myPanel.add(spinner);
 
         this.add(myPanel);
     }
@@ -167,8 +162,8 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, labelDepart, 90, SpringLayout.NORTH, this);
 
         // Depart time
-        currentLayout.putConstraint(SpringLayout.WEST, departSpinner, 505, SpringLayout.WEST, this);
-        currentLayout.putConstraint(SpringLayout.NORTH, departSpinner, 110, SpringLayout.NORTH, this);
+        currentLayout.putConstraint(SpringLayout.WEST, spinner, 505, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.NORTH, spinner, 110, SpringLayout.NORTH, this);
     }
 
     public void addToList(String el) {

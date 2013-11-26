@@ -1,11 +1,10 @@
 package com.algo.model;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JLabel;
-import javax.swing.Timer;
 
 public class Clock extends JLabel {
 
@@ -31,4 +30,6 @@ public class Clock extends JLabel {
             }
         });
     }
+
+
 }
