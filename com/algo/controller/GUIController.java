@@ -27,6 +27,8 @@ public class GUIController implements ActionListener {
         if (from != null && to != null) {
             model.setDoSearch(from, to);
             view.setDisplay(model.getDetails());
+        } else {
+            view.setDisplay("Please choose FROM and TO station.");
         }
     }
 }

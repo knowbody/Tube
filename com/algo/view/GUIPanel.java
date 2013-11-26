@@ -214,4 +214,9 @@ public class GUIPanel extends JFrame {
         // Now set the updated vector to JList jl
         jl.setListData(v);
     }
+
+    public void setDisplay(String error) {
+        addToList(error);
+        jl.setListData(v);
+    }
 }
