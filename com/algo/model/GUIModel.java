@@ -97,7 +97,7 @@ public class GUIModel {
                 // List head
                 details.add("FROM: " + fromStation + "\n");
                 details.add("TO: " + station.getName());
-                details.add("DISTANCE: " + (station.getDistance() * 0.5) + "km"); // Distance calculated (number of dots * 0.5 km)
+                details.add("TOTAL DISTANCE: " + (station.getDistance() * 0.5) + "km"); // Distance calculated (number of dots * 0.5 km)
                 details.add("STARTING TIME: " + localTime); // Journey starting time
                 details.add(" ");
                 details.add("ROUTE DESCRIPTION:");
@@ -130,8 +130,18 @@ public class GUIModel {
                         if (i < numOfStations) {
                             // Total journey time between current and next station
                             double timeToNextS = (double) ((((station.getFromSPath(i).getDistance() - station.getFromSPath(i - 1).getDistance()) * 500) / 9) / 60);
-                            localT = addTime((int) timeToNextS, extractFractionAsSeconds(timeToNextS)); // Adding local travelling time
- 
+                            
+                            // If line C than checking if passenger will be 
+                            // travelling during special signalling operation hours
+                            if (lineCurrent.equals("C")) {
+                                if ((localT.compareTo(diffSignal9AM) > 0 && localT.compareTo(diffSignal4PM) < 0) || (localT.compareTo(diffSignal7PM) > 0 && localT.compareTo(diffSignal12PM) < 0)) { 
+                                    timeToNextS /= 2; // Make the travelling time between station half-faster
+                                }
+                            }
+                            
+                            // Updating local travelling time
+                            localT = addTime((int) timeToNextS, extractFractionAsSeconds(timeToNextS)); 
+                            
                             // If we did get any random change time from previous run
                             // append it here
                             if (ranChangeTime != 0) {
@@ -144,17 +154,9 @@ public class GUIModel {
                             if (localT.compareTo(offPeak) > 0) { 
                                 peak = true;
                             }
- 
-                            // If line C than checking if passenger will be 
-                            // travelling during special signalling operation hours
-                            if (lineCurrent.equals("C")) {
-                                if ((localT.compareTo(diffSignal9AM) > 0 && localT.compareTo(diffSignal4PM) < 0) || (localT.compareTo(diffSignal7PM) > 0 && localT.compareTo(diffSignal12PM) < 0)) { 
-                                    timeToNextS /= 2; // Make the travelling time between station half-faster
-                                }
-                            }
                             
                             details.add("Time to next station: " + (int) timeToNextS + "min " + extractFractionAsSeconds(timeToNextS) + "s"
-                                    + " | Total time: " + (int) totalJourneyTime + "min " + extractFractionAsSeconds(totalJourneyTime) + "s");
+                                    + " | Total: " + (int) totalJourneyTime + "min " + extractFractionAsSeconds(totalJourneyTime) + "s");
                             totalJourneyTime += timeToNextS; 
                             // Getting next station and observing line
                             nextStation = station.getFromSPath(i).getName();
@@ -173,7 +175,7 @@ public class GUIModel {
                                 }
                                 if (ranChangeTime != 0) {
                                     localT = addTime((int) ranChangeTime, 0); // Adding wait time to local travelling time
-                                    details.add("*** Wait for next train " + ranChangeTime + " min.");
+                                    details.add("*** Wait for next train " + ranChangeTime + " minutes ***");
                                 }
                             }
                         }
