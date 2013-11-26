@@ -98,7 +98,7 @@ public class GUIPanel extends JFrame {
         detailsArea.setLineWrap(true);
         jl.setCellRenderer(new StripeRenderer());
         scrollPane = new JScrollPane(jl);
-        scrollPane.setPreferredSize(new Dimension(300, 230));
+        scrollPane.setPreferredSize(new Dimension(380, 230));
         detailsArea.setEditable(false);
 
         fromScroller = new JScrollPane(listFrom);
@@ -220,10 +220,8 @@ public class GUIPanel extends JFrame {
     }
 
     // getting the time from the spinner
-    public String getTime() {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+    public Date getTime() {
         Date time = (Date)spinner.getValue();
-        String formattedDate = dateFormat.format(time);
-        return formattedDate;
+        return time;
     }
 }
