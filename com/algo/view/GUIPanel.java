@@ -149,7 +149,7 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, scrollPane, 40, SpringLayout.NORTH, this);
 
         // BUTTON: Check
-        currentLayout.putConstraint(SpringLayout.WEST, checkBtn, 500, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, checkBtn, 540, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, checkBtn, 150, SpringLayout.NORTH, this);
 
         // IMAGE: Tube Map
@@ -157,15 +157,15 @@ public class GUIPanel extends JFrame {
         currentLayout.putConstraint(SpringLayout.NORTH, picLabel, 290, SpringLayout.NORTH, this);
 
         // CLOCK
-        currentLayout.putConstraint(SpringLayout.WEST, clock, 500, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, clock, 540, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, clock, 20, SpringLayout.NORTH, this);
 
         // Depart time label
-        currentLayout.putConstraint(SpringLayout.WEST, labelDepart, 505, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, labelDepart, 545, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, labelDepart, 90, SpringLayout.NORTH, this);
 
         // Depart time
-        currentLayout.putConstraint(SpringLayout.WEST, spinner, 505, SpringLayout.WEST, this);
+        currentLayout.putConstraint(SpringLayout.WEST, spinner, 545, SpringLayout.WEST, this);
         currentLayout.putConstraint(SpringLayout.NORTH, spinner, 110, SpringLayout.NORTH, this);
     }
 
